@@ -140,12 +140,9 @@ Thank you for choosing Zareen Fragrance.`;
                       <span className="text-[10px] tracking-widest font-bold uppercase">Cash on Delivery</span>
                     </div>
                   </label>
-                  <label className={`flex items-center justify-between p-4 border cursor-pointer transition-all ${formData.paymentMethod === 'bank' ? 'border-black bg-black text-white' : 'border-gray-100 hover:border-gray-300'}`}>
-                    <div className="flex items-center gap-3">
-                      <input type="radio" name="paymentMethod" value="bank" checked={formData.paymentMethod === 'bank'} onChange={handleChange} className="hidden" />
-                      <span className="text-[10px] tracking-widest font-bold uppercase">Bank Transfer</span>
-                    </div>
-                  </label>
+                  
+                
+
                 </div>
               </div>
 

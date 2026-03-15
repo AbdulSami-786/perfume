@@ -29,8 +29,8 @@ const Home = () => {
 
   const categories = [
     { name: "BEST SELLER PERFUMES", image: "https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?auto=format&fit=crop&w=1200&q=80", link: "/products?category=bestseller" },
-    { name: "PERFUME FOR HER", image: "https://images.unsplash.com/photo-1587017539504-67cfbddac569?auto=format&fit=crop&w=1200&q=80", link: "/products?category=women" },
-    { name: "PERFUME FOR HIM", image: "https://images.unsplash.com/photo-1618407791053-39820b70cdb2?auto=format&fit=crop&w=1200&q=80", link: "/products?category=men" },
+    { name: "PERFUME FOR HER", image: "b2.jpeg", link: "/products?category=women" },
+    { name: "PERFUME FOR HIM", image: "b1.jpeg", link: "/products?category=men" },
   ];
 
   // Handle add to cart with animation
@@ -103,7 +103,7 @@ const Home = () => {
                       </div>
                     )}
                     <img 
-                      src={product.image} 
+                      src={product.mainImage} 
                       alt={product.name} 
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                     />

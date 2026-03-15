@@ -103,7 +103,7 @@ const Product = () => {
                   {/* Product Image Area */}
                   <Link to={`/product/${product.id}`} className="relative w-full aspect-[4/5] bg-[#F8F8F8] overflow-hidden mb-6">
                     <img 
-                      src={product.image} 
+                      src={product.mainImage} 
                       alt={product.name} 
                       className="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform duration-700"
                     />

@@ -1,194 +1,195 @@
 export const products = [
   {
     id: 1,
-    name: "Dior Sauvage",
+    name: "مسک الروضۃ – Zareen Fragrance 50 ml Eau de Parfum ",
     price: 120,
-    image: "https://via.placeholder.com/300x300?text=Dior+Sauvage",
-    description: "A fresh, spicy fragrance for men with notes of bergamot and ambroxan.",
+    images: ["../../public/p1.jpeg", "../../public/p1-2.jpeg", "../../public/p1-3.jpeg"],
+    mainImage: "p1.jpeg",
+    description: `مسک الروضۃ – Zareen Fragrance 
+50 ml Eau de Parfum 
+
+An elegant, luxurious scent inspired by traditional musk notes.
+The fragrance blends rich oriental musk with subtle floral hints for a sophisticated aura.
+
+🛍️ How to use:
+1. Shake gently before spraying.
+2. Store in a cool, dry place away from sunlight.
+3. Keep away from eyes and sensitive skin.
+4. Apply 4–6 sprays for long-lasting fragrance.
+
+📲 Connect with Zareen Fragrance:
+- Instagram: @ZAREENFRAGRANCE
+- WhatsApp: +92 371 1191925
+
+#ZareenFragrance #MuskAlRawdah #EauDeParfum #Perfume #LuxuryFragrance #OrientalScent #NewLaunch #Beauty #PakistanBrand`,
     category: "men"
   },
   {
     id: 2,
-    name: "Chanel No. 5",
+    name: "Pink Aura – Zareen Fragrance's 50ml Eau de Parfum ",
     price: 150,
-    image: "https://via.placeholder.com/300x300?text=Chanel+No.5",
-    description: "The iconic floral aldehyde fragrance for women, timeless and elegant.",
+    images: ["../../public/p2.jpeg", "../../public/p2-2.jpeg", "../../public/p2-3.jpeg"],
+    mainImage: "p2.jpeg",
+    description: `🌸 Pink Aura – Zareen Fragrance's 50ml Eau de Parfum 🌸
+✨ A fresh and captivating scent that elevates your day.
+💖 Pink Aura blends floral and fruity notes for a boost of confidence and energy.
+
+🛍️ How to use:
+1. Shake gently before use.
+2. Store in a cool, dry place away from direct sunlight.
+3. Avoid contact with eyes and sensitive areas.
+4. Apply 5-6 sprays for best results.
+
+📲 Connect with Zareen Fragrance:
+- Instagram: @ZAREENFRAGRANCE
+- WhatsApp: +92 371 1191925
+
+#ZareenFragrance #PinkAura #EauDeParfum #Perfume #Fragrance #NewLaunch #Beauty #Style #PakistanBrand #LuxuryPerfume`,
     category: "women"
   },
   {
     id: 3,
-    name: "Creed Aventus",
+    name: "Fresh Aura – Zareen Fragrance 50ml Eau de Parfum ",
     price: 350,
-    image: "https://via.placeholder.com/300x300?text=Creed+Aventus",
-    description: "A sophisticated blend of pineapple, birch, and musk – a true masterpiece.",
+    images: ["../../public/p3.jpeg", "../../public/p3-2.jpeg", "../../public/p3-3.jpeg"],
+    mainImage: "p3.jpeg",
+    description: `Fresh Aura – Zareen Fragrance 50ml Eau de Parfum 
+A crisp, invigorating scent that leaves a lasting impression of elegance.
+The Fresh Aura blend captures bright citrus & clean floral notes for an all‑day freshness.
+
+🛍️ How to use:
+1. Shake gently before spraying.
+2. Store in a cool, dry place away from sunlight.
+3. Keep away from eyes and sensitive skin.
+4. Apply 4–6 sprays for long-lasting fragrance.
+
+📲 Connect with Zareen Fragrance:
+- Instagram: @ZAREENFRAGRANCE
+- WhatsApp: +92 371 1191925
+
+#ZareenFragrance #FreshAura #EauDeParfum #NewLaunch #PerfumeLover #GiftBox`,
     category: "men"
   },
   {
     id: 4,
-    name: "Jo Malone Peony & Blush Suede",
+    name: "White Sultan by Zareen Fragrance",
     price: 130,
-    image: "https://via.placeholder.com/300x300?text=Jo+Malone+Peony",
-    description: "A luxurious floral fragrance with peony, suede, and jasmine.",
+    images: ["../../public/p4.jpeg", "../../public/p4-2.jpeg", "../../public/p4-3.jpeg"],
+    mainImage: "p4.jpeg",
+    description: `"White Sultan by Zareen Fragrance”
+A royal scent that elevates your vibe!
+
+🛍️ How to use:
+1. Shake gently before use.
+2. Store in a cool, dry place away from direct sunlight.
+3. Avoid contact with eyes and sensitive areas.
+4. Apply 5-6 sprays for best results.
+
+📲 Connect with Zareen Fragrance:
+- Instagram: @ZAREENFRAGRANCE
+- WhatsApp: +92 371 1191925
+
+#ZareenFragrance #PinkAura #EauDeParfum #Perfume #Fragrance #NewLaunch #Beauty #Style #PakistanBrand #LuxuryPerfume`,
     category: "women"
   },
   {
     id: 5,
-    name: "Tom Ford Tobacco Vanille",
-    price: 250,
-    image: "https://via.placeholder.com/300x300?text=Tom+Ford+Tobacco",
-    description: "Warm and spicy with tobacco leaf, vanilla, and cocoa – perfect for winter.",
-    category: "unisex"
+    name: "Jasmine Bloom Car Diffuser by Zareen Fragrance",
+    price: 130,
+    images: ["../../public/p5.jpeg"],
+    mainImage: "p5.jpeg",
+    description: `"Jasmine Bloom by Zareen Fragrance"
+Transform your drive into a floral paradise!
+
+🛍️ How to use:
+1. Remove the internal plastic stopper from the bottle.
+2. Screw the wooden lid back on tightly.
+3. Tilt the bottle upside down for 3-5 seconds to soak the wood.
+4. Hang freely on your rearview mirror and enjoy the scent.
+5. Repeat tilting once a week to refresh the fragrance.
+
+📲 Connect with Zareen Fragrance:
+- Instagram: @ZAREENFRAGRANCE
+- WhatsApp: +92 371 1191925
+
+#ZareenFragrance #JasmineBloom #CarDiffuser #CarScent #LuxuryFragrance #FreshDrive #Aromatherapy #PakistanBrand #CarCare`,
+    category: "accessories"
   },
   {
     id: 6,
-    name: "Yves Saint Laurent Black Opium",
-    price: 110,
-    image: "https://via.placeholder.com/300x300?text=YSL+Black+Opium",
-    description: "An edgy, coffee-based floral with notes of pink pepper and vanilla.",
-    category: "women"
+    name: "Rose Petal Car Diffuser by Zareen Fragrance",
+    price: 130,
+    images: ["../../public/p6.jpeg"],
+    mainImage: "p6.jpeg",
+    description: `"Rose Petal by Zareen Fragrance"
+A timeless, elegant scent that brings the freshness of a rose garden to your car!
+
+🛍️ How to use:
+1. Unscrew the wooden lid and remove the internal plastic stopper.
+2. Secure the wooden lid back onto the bottle.
+3. Tilt the bottle upside down for 3-5 seconds until the wood absorbs the oil.
+4. Hang it on your rearview mirror and adjust the string to your liking.
+5. Refresh the scent by tilting the bottle whenever needed.
+
+📲 Connect with Zareen Fragrance:
+- Instagram: @ZAREENFRAGRANCE
+- WhatsApp: +92 371 1191925
+
+#ZareenFragrance #RosePetal #CarDiffuser #FreshScent #FloralVibe #LuxuryCarScent #PerfumeLovers #PakistanBrand #CarAccessories`,
+    category: "accessories"
   },
   {
     id: 7,
-    name: "Bleu de Chanel",
-    price: 135,
-    image: "https://via.placeholder.com/300x300?text=Bleu+de+Chanel",
-    description: "A woody aromatic fragrance with grapefruit, ginger, and incense.",
-    category: "men"
+    name: "Zareen Fragrance Lavender Car Diffuser",
+    price: 899,
+    images: ["../../public/p7.jpeg"],
+    mainImage: "p7.jpeg",
+    description: "A calming and elegant car air freshener featuring soothing lavender notes housed in a stylish glass bottle with a hanging cord.",
+    category: "accessories"
   },
   {
     id: 8,
-    name: "Marc Jacobs Daisy",
-    price: 95,
-    image: "https://via.placeholder.com/300x300?text=Marc+Jacobs+Daisy",
-    description: "A fresh, youthful scent with strawberry, violet, and gardenia.",
-    category: "women"
+    name: "Zareen Fragrance Rose Petal Reed Diffuser",
+    price: 25,
+    images: ["../../public/p8.jpeg"],
+    mainImage: "p8.jpeg",
+    description: "Transform your home into a floral sanctuary with this House Hold Aroma Therapy diffuser, featuring the delicate and romantic scent of fresh rose petals.",
+    category: "home"
   },
   {
     id: 9,
-    name: "Acqua di Gio Profumo",
-    price: 140,
-    image: "https://via.placeholder.com/300x300?text=Acqua+di+Gio",
-    description: "A marine aromatic with bergamot, rosemary, and patchouli.",
-    category: "men"
+    name: "Zareen Fragrance Lavender Reed Diffuser",
+    price: 25,
+    images: ["../../public/p9.jpeg"],
+    mainImage: "p9.jpeg",
+    description: "A premium House Hold Aroma Therapy solution that infuses your space with the timeless, tranquil scent of blooming lavender fields.",
+    category: "home"
   },
   {
     id: 10,
-    name: "Viktor & Rolf Flowerbomb",
-    price: 125,
-    image: "https://via.placeholder.com/300x300?text=Flowerbomb",
-    description: "An explosion of flowers: jasmine, rose, orchid, and patchouli.",
-    category: "women"
+    name: "Zareen Fragrance Jasmine Bloom Reed Diffuser",
+    price: 25,
+    images: ["../../public/p10.jpeg"],
+    mainImage: "p10.jpeg",
+    description: "An enchanting House Hold Aroma Therapy diffuser that captures the essence of midnight jasmine, filling your home with a sweet and exotic floral bloom.",
+    category: "home"
   },
   {
     id: 11,
-    name: "Paco Rabanne 1 Million",
-    price: 105,
-    image: "https://via.placeholder.com/300x300?text=1+Million",
-    description: "A bold, spicy leather fragrance with blood mandarin and rose.",
-    category: "men"
+    name: "Zareen Fragrance Discovery Tester Set",
+    price: 15,
+    images: ["../../public/p11.jpeg", "../../public/p11-2.jpeg", "../../public/p11-3.jpeg"],
+    mainImage: "p11.jpeg",
+    description: "A premium collection of five signature scents. Explore the world of Zareen Fragrance with this curated tester box, featuring everything from floral blooms to fresh, earthy notes.",
+    category: "testers"
   },
   {
     id: 12,
-    name: "Carolina Herrera Good Girl",
+    name: "Maison Flora by Zareen Fragrance",
     price: 115,
-    image: "https://via.placeholder.com/300x300?text=Good+Girl",
-    description: "A sensual floral with tuberose, jasmine, and cocoa.",
+    images: ["../../public/p12.jpeg", "../../public/p12-2.jpeg", "../../public/p12-3.jpeg"],
+    mainImage: "p12.jpeg",
+    description: "“🌸 Maison Flora by Zareen Fragrance – my go‑to Eau de Parfum that fills my day with enchanting fragrance! 50 ml of luxurious floral‑woody blend.",
     category: "women"
-  },
-  {
-    id: 13,
-    name: "Maison Margiela Replica Jazz Club",
-    price: 140,
-    image: "https://via.placeholder.com/300x300?text=Jazz+Club",
-    description: "A smoky, boozy scent with tobacco leaf, rum, and vanilla.",
-    category: "unisex"
-  },
-  {
-    id: 14,
-    name: "Giorgio Armani Si",
-    price: 130,
-    image: "https://via.placeholder.com/300x300?text=Armani+Si",
-    description: "A chic chypre with blackcurrant nectar, rose, and patchouli.",
-    category: "women"
-  },
-  {
-    id: 15,
-    name: "Hermès Terre d'Hermès",
-    price: 145,
-    image: "https://via.placeholder.com/300x300?text=Terre+d'Hermès",
-    description: "An earthy, mineral fragrance with grapefruit, pepper, and cedar.",
-    category: "men"
-  },
-  {
-    id: 16,
-    name: "Dolce & Gabbana Light Blue",
-    price: 100,
-    image: "https://via.placeholder.com/300x300?text=Light+Blue",
-    description: "A fresh Mediterranean scent with Sicilian lemon and apple.",
-    category: "women"
-  },
-  {
-    id: 17,
-    name: "Jean Paul Gaultier Le Male",
-    price: 110,
-    image: "https://via.placeholder.com/300x300?text=Le+Male",
-    description: "A classic with mint, vanilla, and lavender – sensual and sweet.",
-    category: "men"
-  },
-  {
-    id: 18,
-    name: "Gucci Bloom",
-    price: 135,
-    image: "https://via.placeholder.com/300x300?text=Gucci+Bloom",
-    description: "A lush floral with jasmine, tuberose, and Rangoon creeper.",
-    category: "women"
-  },
-  {
-    id: 19,
-    name: "Byredo Gypsy Water",
-    price: 180,
-    image: "https://via.placeholder.com/300x300?text=Byredo+Gypsy+Water",
-    description: "A woody aromatic with bergamot, juniper, and sandalwood.",
-    category: "unisex"
-  },
-  {
-    id: 20,
-    name: "Kilian Love Don't Be Shy",
-    price: 240,
-    image: "https://via.placeholder.com/300x300?text=Kilian+Love",
-    description: "A gourmand delight with marshmallow, neroli, and vanilla.",
-    category: "women"
-  },
-  {
-    id: 21,
-    name: "Prada L'Homme",
-    price: 125,
-    image: "https://via.placeholder.com/300x300?text=Prada+L'Homme",
-    description: "A clean, iris-based scent with neroli and amber.",
-    category: "men"
-  },
-  {
-    id: 22,
-    name: "Lancôme La Vie Est Belle",
-    price: 115,
-    image: "https://via.placeholder.com/300x300?text=La+Vie+Est+Belle",
-    description: "A sweet gourmand with iris, praline, and vanilla.",
-    category: "women"
-  },
-  {
-    id: 23,
-    name: "Amouage Interlude Man",
-    price: 295,
-    image: "https://via.placeholder.com/300x300?text=Amouage+Interlude",
-    description: "An intense, smoky fragrance with oregano, amber, and leather.",
-    category: "men"
-  },
-  {
-    id: 24,
-    name: "Diptyque Philosykos",
-    price: 160,
-    image: "https://via.placeholder.com/300x300?text=Diptyque+Philosykos",
-    description: "A green, woody scent that captures the fig tree in its entirety.",
-    category: "unisex"
   }
 ];
