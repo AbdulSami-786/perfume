@@ -3,7 +3,7 @@ export const products = [
     id: 1,
     name: "مسک الروضۃ – Zareen Fragrance 50 ml Eau de Parfum ",
     price: 2999,
-    images: ["../../public/p1.jpeg", "../../public/p1-2.jpeg", "../../public/p1-3.jpeg"],
+    images: ["p1.jpeg", "p1-2.jpeg", "p1-3.jpeg"],
     mainImage: "p1.jpeg",
     description: `مسک الروضۃ – Zareen Fragrance 
 50 ml Eau de Parfum 
@@ -90,7 +90,7 @@ A royal scent that elevates your vibe!
 - WhatsApp: +92 371 1191925
 
 #ZareenFragrance #PinkAura #EauDeParfum #Perfume #Fragrance #NewLaunch #Beauty #Style #PakistanBrand #LuxuryPerfume`,
-    category: "women"
+    category: "men"
   },
   {
     id: 5,
