@@ -3,7 +3,7 @@ export const products = [
     id: 1,
     name: "مسک الروضۃ – Zareen Fragrance 50 ml Eau de Parfum ",
     price: 2999,
-    images: ["p1.jpeg", "p1-2.jpeg", "p1-3.jpeg"],
+    images: ["../p1.jpeg", "../p1-2.jpeg", "../p1-3.jpeg"],
     mainImage: "p1.jpeg",
     description: `مسک الروضۃ – Zareen Fragrance 
 50 ml Eau de Parfum 
