@@ -23,12 +23,12 @@ const Home = () => {
     name: "RAMADAN SPECIAL | 4X PERFUMES",
     originalPrice: 5600,
     price: 4400,
-    image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80",
+    image: "b4.jpeg",
     description: "Get 4 premium fragrances in just Rs 4400"
   };
 
   const categories = [
-    { name: "BEST SELLER PERFUMES", image: "https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?auto=format&fit=crop&w=1200&q=80", link: "/products?category=bestseller" },
+    { name: "Reed Diffuser For House Hold", image: "b3.jpeg", link: "/products?category=bestseller" },
     { name: "PERFUME FOR HER", image: "b2.jpeg", link: "/products?category=women" },
     { name: "PERFUME FOR HIM", image: "b1.jpeg", link: "/products?category=men" },
   ];

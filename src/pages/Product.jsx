@@ -161,18 +161,7 @@ const Product = () => {
           </div>
         )}
 
-        {/* Pagination */}
-        {sortedProducts.length > 0 && (
-          <div className="flex justify-center mt-20 border-t border-gray-100 pt-10 gap-8">
-            <button className="text-[10px] tracking-widest font-bold text-gray-400 hover:text-black transition">PREVIOUS</button>
-            <div className="flex gap-4 items-center">
-              <span className="text-[12px] font-bold border-b border-black pb-1">01</span>
-              <span className="text-[12px] text-gray-300">02</span>
-              <span className="text-[12px] text-gray-300">03</span>
-            </div>
-            <button className="text-[10px] tracking-widest font-bold text-black hover:text-gray-500 transition">NEXT</button>
-          </div>
-        )}
+     
       </div>
     </div>
   );

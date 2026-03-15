@@ -163,7 +163,7 @@ Thank you for choosing Zareen Fragrance.`;
               <div className="space-y-6 mb-8 max-h-[40vh] overflow-y-auto pr-2 custom-scrollbar">
                 {cartItems.map(item => (
                   <div key={item.id} className="flex gap-4 items-center">
-                    <img src={item.image} alt={item.name} className="w-16 h-20 object-cover grayscale hover:grayscale-0 transition-all" />
+                    <img src={item.mainImage} alt={item.name} className="w-16 h-20 object-cover grayscale hover:grayscale-0 transition-all" />
                     <div className="flex-1">
                       <h4 className="text-[10px] font-bold uppercase tracking-widest leading-tight">{item.name}</h4>
                       <p className="text-[10px] text-gray-400 mt-1 uppercase">Qty: {item.quantity}</p>

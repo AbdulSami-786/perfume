@@ -73,7 +73,7 @@ const Cart = () => {
                     <div className="col-span-12 md:col-span-7 flex items-center gap-6">
                       <div className="w-24 h-32 bg-gray-50 overflow-hidden">
                         <img 
-                          src={item.image} 
+                          src={item.mainImage} 
                           alt={item.name} 
                           className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                         />

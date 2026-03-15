@@ -18,29 +18,7 @@ const Contact = () => {
     setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
   };
 
-  const stores = [
-    {
-      name: 'OCEAN MALL',
-      address: 'Shop no 219, Second Floor, Ocean Mall',
-      city: 'Karachi',
-      phone: '+92 21 1234 5678',
-      hours: '11:00 AM - 11:00 PM',
-    },
-    {
-      name: 'THE NORTH WALK',
-      address: 'Kiosk FF-01, First Floor, NorthWalk Mall',
-      city: 'Karachi',
-      phone: '+92 21 8765 4321',
-      hours: '11:00 AM - 11:00 PM',
-    },
-    {
-      name: 'GULSHAN OUTLET',
-      address: 'A-219, KDA Market, Block 3, Gulshan-e-Iqbal',
-      city: 'Karachi',
-      phone: '+92 21 2468 1357',
-      hours: '10:00 AM - 10:00 PM',
-    }
-  ];
+ 
 
   return (
     <div className="bg-white text-black font-sans">
@@ -63,7 +41,7 @@ const Contact = () => {
               <Phone size={30} strokeWidth={1} />
             </div>
             <h3 className="text-xs tracking-[0.3em] font-bold uppercase mb-3">Customer Concierge</h3>
-            <p className="text-sm font-serif italic mb-1">+92 21 111 222 333</p>
+            <p className="text-sm font-serif italic mb-1">+92 371 1191925</p>
             <p className="text-[10px] text-gray-400 tracking-widest uppercase">Mon-Sun, 11am - 11pm</p>
           </div>
           
@@ -72,7 +50,7 @@ const Contact = () => {
               <Mail size={30} strokeWidth={1} />
             </div>
             <h3 className="text-xs tracking-[0.3em] font-bold uppercase mb-3">Digital Inquiries</h3>
-            <p className="text-sm font-serif italic mb-1">concierge@zareenfragrance.com</p>
+            <p className="text-sm font-serif italic mb-1">zareenfragrances@gmail.com</p>
             <p className="text-[10px] text-gray-400 tracking-widest uppercase">24/7 Response Time</p>
           </div>
           
@@ -81,7 +59,7 @@ const Contact = () => {
               <MessageSquare size={30} strokeWidth={1} />
             </div>
             <h3 className="text-xs tracking-[0.3em] font-bold uppercase mb-3">WhatsApp Live</h3>
-            <p className="text-sm font-serif italic mb-1">+92 300 1234567</p>
+            <p className="text-sm font-serif italic mb-1">+92 371 1191925</p>
             <p className="text-[10px] text-gray-400 tracking-widest uppercase">Quickest Assistance</p>
           </div>
         </div>
@@ -150,21 +128,7 @@ const Contact = () => {
         </div>
 
         {/* 4. Retail Outlets */}
-        <div className="mb-32">
-          <h2 className="text-center text-2xl font-serif italic tracking-widest mb-12 uppercase">Retail Destinations</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {stores.map((store, index) => (
-              <div key={index} className="border border-gray-100 p-8 text-center hover:border-black transition-colors duration-500">
-                <h3 className="text-sm font-bold tracking-[0.2em] uppercase mb-4">{store.name}</h3>
-                <div className="text-[11px] text-gray-500 space-y-3 uppercase tracking-tighter leading-relaxed">
-                  <p className="flex justify-center gap-2"><MapPin size={12} /> {store.address}</p>
-                  <p className="flex justify-center gap-2"><Phone size={12} /> {store.phone}</p>
-                  <p className="flex justify-center gap-2"><Clock size={12} /> {store.hours}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+       
       </div>
     </div>
   );

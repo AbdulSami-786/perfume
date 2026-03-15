@@ -2,7 +2,7 @@ export const products = [
   {
     id: 1,
     name: "مسک الروضۃ – Zareen Fragrance 50 ml Eau de Parfum ",
-    price: 120,
+    price: 2999,
     images: ["../../public/p1.jpeg", "../../public/p1-2.jpeg", "../../public/p1-3.jpeg"],
     mainImage: "p1.jpeg",
     description: `مسک الروضۃ – Zareen Fragrance 
@@ -27,7 +27,7 @@ The fragrance blends rich oriental musk with subtle floral hints for a sophistic
   {
     id: 2,
     name: "Pink Aura – Zareen Fragrance's 50ml Eau de Parfum ",
-    price: 150,
+    price: 2599,
     images: ["../../public/p2.jpeg", "../../public/p2-2.jpeg", "../../public/p2-3.jpeg"],
     mainImage: "p2.jpeg",
     description: `🌸 Pink Aura – Zareen Fragrance's 50ml Eau de Parfum 🌸
@@ -50,7 +50,7 @@ The fragrance blends rich oriental musk with subtle floral hints for a sophistic
   {
     id: 3,
     name: "Fresh Aura – Zareen Fragrance 50ml Eau de Parfum ",
-    price: 350,
+    price: 2750,
     images: ["../../public/p3.jpeg", "../../public/p3-2.jpeg", "../../public/p3-3.jpeg"],
     mainImage: "p3.jpeg",
     description: `Fresh Aura – Zareen Fragrance 50ml Eau de Parfum 
@@ -73,7 +73,7 @@ The Fresh Aura blend captures bright citrus & clean floral notes for an all‑da
   {
     id: 4,
     name: "White Sultan by Zareen Fragrance",
-    price: 130,
+    price: 2999,
     images: ["../../public/p4.jpeg", "../../public/p4-2.jpeg", "../../public/p4-3.jpeg"],
     mainImage: "p4.jpeg",
     description: `"White Sultan by Zareen Fragrance”
@@ -95,7 +95,7 @@ A royal scent that elevates your vibe!
   {
     id: 5,
     name: "Jasmine Bloom Car Diffuser by Zareen Fragrance",
-    price: 130,
+    price: 899,
     images: ["../../public/p5.jpeg"],
     mainImage: "p5.jpeg",
     description: `"Jasmine Bloom by Zareen Fragrance"
@@ -118,7 +118,7 @@ Transform your drive into a floral paradise!
   {
     id: 6,
     name: "Rose Petal Car Diffuser by Zareen Fragrance",
-    price: 130,
+    price: 899,
     images: ["../../public/p6.jpeg"],
     mainImage: "p6.jpeg",
     description: `"Rose Petal by Zareen Fragrance"
@@ -150,7 +150,7 @@ A timeless, elegant scent that brings the freshness of a rose garden to your car
   {
     id: 8,
     name: "Zareen Fragrance Rose Petal Reed Diffuser",
-    price: 25,
+    price: 2499,
     images: ["../../public/p8.jpeg"],
     mainImage: "p8.jpeg",
     description: "Transform your home into a floral sanctuary with this House Hold Aroma Therapy diffuser, featuring the delicate and romantic scent of fresh rose petals.",
@@ -159,7 +159,7 @@ A timeless, elegant scent that brings the freshness of a rose garden to your car
   {
     id: 9,
     name: "Zareen Fragrance Lavender Reed Diffuser",
-    price: 25,
+    price: 2499,
     images: ["../../public/p9.jpeg"],
     mainImage: "p9.jpeg",
     description: "A premium House Hold Aroma Therapy solution that infuses your space with the timeless, tranquil scent of blooming lavender fields.",
@@ -168,7 +168,7 @@ A timeless, elegant scent that brings the freshness of a rose garden to your car
   {
     id: 10,
     name: "Zareen Fragrance Jasmine Bloom Reed Diffuser",
-    price: 25,
+    price: 2499,
     images: ["../../public/p10.jpeg"],
     mainImage: "p10.jpeg",
     description: "An enchanting House Hold Aroma Therapy diffuser that captures the essence of midnight jasmine, filling your home with a sweet and exotic floral bloom.",
@@ -177,7 +177,7 @@ A timeless, elegant scent that brings the freshness of a rose garden to your car
   {
     id: 11,
     name: "Zareen Fragrance Discovery Tester Set",
-    price: 15,
+    price: 1250,
     images: ["../../public/p11.jpeg", "../../public/p11-2.jpeg", "../../public/p11-3.jpeg"],
     mainImage: "p11.jpeg",
     description: "A premium collection of five signature scents. Explore the world of Zareen Fragrance with this curated tester box, featuring everything from floral blooms to fresh, earthy notes.",
@@ -186,7 +186,7 @@ A timeless, elegant scent that brings the freshness of a rose garden to your car
   {
     id: 12,
     name: "Maison Flora by Zareen Fragrance",
-    price: 115,
+    price: 2899,
     images: ["../../public/p12.jpeg", "../../public/p12-2.jpeg", "../../public/p12-3.jpeg"],
     mainImage: "p12.jpeg",
     description: "“🌸 Maison Flora by Zareen Fragrance – my go‑to Eau de Parfum that fills my day with enchanting fragrance! 50 ml of luxurious floral‑woody blend.",
