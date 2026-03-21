@@ -31,6 +31,10 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
 
+  // Swipe state for mobile
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -89,6 +93,35 @@ const ProductDetail = () => {
     navigate('/cart');
   };
 
+  // Swipe handlers
+  const handleTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientX);
+    setTouchEnd(null);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const diff = touchStart - touchEnd;
+    const threshold = 50; // minimum swipe distance
+
+    if (Math.abs(diff) > threshold) {
+      if (diff > 0 && selectedImage < images.length - 1) {
+        // Swipe left -> next image
+        setSelectedImage(prev => prev + 1);
+      } else if (diff < 0 && selectedImage > 0) {
+        // Swipe right -> previous image
+        setSelectedImage(prev => prev - 1);
+      }
+    }
+
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
   return (
     <div className="bg-white text-black font-sans">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -130,8 +163,13 @@ const ProductDetail = () => {
               </div>
             )}
             
-            {/* Main Image Display */}
-            <div className="flex-1">
+            {/* Main Image Display - with swipe support */}
+            <div 
+              className="flex-1"
+              onTouchStart={images.length > 1 ? handleTouchStart : undefined}
+              onTouchMove={images.length > 1 ? handleTouchMove : undefined}
+              onTouchEnd={images.length > 1 ? handleTouchEnd : undefined}
+            >
               <div className="border border-gray-100 overflow-hidden bg-gray-50">
                 <img 
                   src={images[selectedImage]} 
