@@ -2,7 +2,7 @@
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Minus, Plus, X, ArrowLeft, ShoppingBag } from 'lucide-react';
+import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag } from 'lucide-react'; // <-- replaced X with Trash2
 
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity, cartTotal } = useCart();
@@ -110,9 +110,9 @@ const Cart = () => {
                     <div className="col-span-12 md:col-span-3 flex md:flex-col justify-between items-center md:items-end gap-4">
                       <button 
                         onClick={() => removeFromCart(item.id)}
-                        className="text-gray-300 hover:text-black transition order-2 md:order-1"
+                        className="text-black hover:text-gray-600 transition order-2 md:order-1" // changed to always black, bold stroke
                       >
-                        <X size={16} strokeWidth={1} />
+                        <Trash2 size={18} strokeWidth={2} /> {/* bold dustbin icon */}
                       </button>
                       <p className="font-serif italic text-sm order-1 md:order-2">
                         Rs.{(item.price * item.quantity).toLocaleString()}

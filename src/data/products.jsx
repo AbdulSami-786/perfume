@@ -32,20 +32,9 @@ The fragrance blends rich oriental musk with subtle floral hints for a sophistic
     mainImage: "p2.jpeg",
     description: `🌸 Pink Aura – Zareen Fragrance's 50ml Eau de Parfum 🌸
 ✨ A fresh and captivating scent that elevates your day.
-💖 Pink Aura blends floral and fruity notes for a boost of confidence and energy.
+💖 Pink Aura blends floral and fruity notes for a boost of confidence and energy.`,
 
-🛍️ How to use:
-1. Shake gently before use.
-2. Store in a cool, dry place away from direct sunlight.
-3. Avoid contact with eyes and sensitive areas.
-4. Apply 5-6 sprays for best results.
-
-📲 Connect with Zareen Fragrance:
-- Instagram: @ZAREENFRAGRANCE
-- WhatsApp: +92 371 1191925
-
-#ZareenFragrance #PinkAura #EauDeParfum #Perfume #Fragrance #NewLaunch #Beauty #Style #PakistanBrand #LuxuryPerfume`,
-    category: "women"
+ category: "women"
   },
   {
     id: 3,
@@ -57,17 +46,7 @@ The fragrance blends rich oriental musk with subtle floral hints for a sophistic
 A crisp, invigorating scent that leaves a lasting impression of elegance.
 The Fresh Aura blend captures bright citrus & clean floral notes for an all‑day freshness.
 
-🛍️ How to use:
-1. Shake gently before spraying.
-2. Store in a cool, dry place away from sunlight.
-3. Keep away from eyes and sensitive skin.
-4. Apply 4–6 sprays for long-lasting fragrance.
-
-📲 Connect with Zareen Fragrance:
-- Instagram: @ZAREENFRAGRANCE
-- WhatsApp: +92 371 1191925
-
-#ZareenFragrance #FreshAura #EauDeParfum #NewLaunch #PerfumeLover #GiftBox`,
+`,
     category: "men"
   },
   {
@@ -79,17 +58,7 @@ The Fresh Aura blend captures bright citrus & clean floral notes for an all‑da
     description: `"White Sultan by Zareen Fragrance”
 A royal scent that elevates your vibe!
 
-🛍️ How to use:
-1. Shake gently before use.
-2. Store in a cool, dry place away from direct sunlight.
-3. Avoid contact with eyes and sensitive areas.
-4. Apply 5-6 sprays for best results.
-
-📲 Connect with Zareen Fragrance:
-- Instagram: @ZAREENFRAGRANCE
-- WhatsApp: +92 371 1191925
-
-#ZareenFragrance #PinkAura #EauDeParfum #Perfume #Fragrance #NewLaunch #Beauty #Style #PakistanBrand #LuxuryPerfume`,
+`,
     category: "men"
   },
   {
@@ -101,18 +70,7 @@ A royal scent that elevates your vibe!
     description: `"Jasmine Bloom by Zareen Fragrance"
 Transform your drive into a floral paradise!
 
-🛍️ How to use:
-1. Remove the internal plastic stopper from the bottle.
-2. Screw the wooden lid back on tightly.
-3. Tilt the bottle upside down for 3-5 seconds to soak the wood.
-4. Hang freely on your rearview mirror and enjoy the scent.
-5. Repeat tilting once a week to refresh the fragrance.
-
-📲 Connect with Zareen Fragrance:
-- Instagram: @ZAREENFRAGRANCE
-- WhatsApp: +92 371 1191925
-
-#ZareenFragrance #JasmineBloom #CarDiffuser #CarScent #LuxuryFragrance #FreshDrive #Aromatherapy #PakistanBrand #CarCare`,
+`,
     category: "accessories"
   },
   {
@@ -124,18 +82,7 @@ Transform your drive into a floral paradise!
     description: `"Rose Petal by Zareen Fragrance"
 A timeless, elegant scent that brings the freshness of a rose garden to your car!
 
-🛍️ How to use:
-1. Unscrew the wooden lid and remove the internal plastic stopper.
-2. Secure the wooden lid back onto the bottle.
-3. Tilt the bottle upside down for 3-5 seconds until the wood absorbs the oil.
-4. Hang it on your rearview mirror and adjust the string to your liking.
-5. Refresh the scent by tilting the bottle whenever needed.
-
-📲 Connect with Zareen Fragrance:
-- Instagram: @ZAREENFRAGRANCE
-- WhatsApp: +92 371 1191925
-
-#ZareenFragrance #RosePetal #CarDiffuser #FreshScent #FloralVibe #LuxuryCarScent #PerfumeLovers #PakistanBrand #CarAccessories`,
+`,
     category: "accessories"
   },
   {

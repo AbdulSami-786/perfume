@@ -20,11 +20,11 @@ const Home = () => {
 
   const dealProduct = {
     id: 'deal1',
-    name: "RAMADAN SPECIAL | 4X PERFUMES",
+    name: "Eid Special| 10%Off PERFUMES",
     originalPrice: 5600,
     price: 4400,
     image: "b4.jpeg",
-    description: "Get 4 premium fragrances in just Rs 4400"
+    description: "Get all premium fragrances in 10% off "
   };
 
   const categories = [
@@ -60,7 +60,7 @@ const Home = () => {
         </div>
         <div className="relative z-10 text-white max-w-2xl">
           <h2 className="text-xs tracking-[0.5em] mb-4 uppercase font-bold">Zareen Fragrance Exclusive</h2>
-          <h1 className="text-5xl md:text-7xl font-serif mb-6 italic leading-tight">Ramadan Special</h1>
+          <h1 className="text-5xl md:text-7xl font-serif mb-6 italic leading-tight">Eid Special</h1>
           <p className="text-lg md:text-xl mb-8 font-light tracking-wide">{dealProduct.description}</p>
           <Link 
             to="/products" 
