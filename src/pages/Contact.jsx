@@ -118,9 +118,7 @@ const Contact = () => {
           <div className="bg-[#F9F9F9] p-8 md:p-12 text-center flex flex-col items-center justify-center border border-gray-100 h-full min-h-[400px]">
             <MapPin size={40} strokeWidth={1} className="mb-6 text-gray-300" />
             <h3 className="text-lg font-serif italic mb-4">The Flagship Experience</h3>
-            <p className="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-6 leading-loose">
-              Experience our full collection in person.<br/> Ocean Mall, 2nd Floor, Karachi.
-            </p>
+          
             <button className="text-[10px] font-bold tracking-[0.3em] border-b border-black pb-1 hover:text-gray-500 transition">
               FIND ON MAPS
             </button>

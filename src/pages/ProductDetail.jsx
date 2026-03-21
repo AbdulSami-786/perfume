@@ -124,17 +124,17 @@ const ProductDetail = () => {
 
   return (
     <div className="bg-white text-black font-sans">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+      <div className="container mx-auto px-4 py-4 sm:py-8 max-w-6xl">
         
         {/* Breadcrumb / Back */}
         <button 
           onClick={() => navigate(-1)} 
-          className="mb-6 text-sm uppercase tracking-widest text-gray-500 hover:text-black transition-colors flex items-center gap-2"
+          className="mb-4 sm:mb-6 text-xs sm:text-sm uppercase tracking-widest text-gray-500 hover:text-black transition-colors flex items-center gap-2"
         >
           ← Back to Collection
         </button>
 
-        <div className="flex flex-col lg:flex-row gap-12">
+        <div className="flex flex-col lg:flex-row gap-6 sm:gap-12">
           {/* Left: Product Images */}
           <div className="lg:w-1/2 flex gap-4">
             {/* Thumbnail Gallery - Only show if multiple images */}
@@ -197,7 +197,7 @@ const ProductDetail = () => {
                 </div>
               )}
               
-              <div className="text-center mt-4 font-bold tracking-tighter text-xl">
+              <div className="text-center mt-4 font-bold tracking-tighter text-base sm:text-xl">
                 {product.category === 'men' ? 'MEN' : product.category === 'women' ? 'WOMEN' : 'UNISEX'}
               </div>
             </div>
@@ -205,39 +205,39 @@ const ProductDetail = () => {
 
           {/* Right: Product Info */}
           <div className="lg:w-1/2">
-            <h1 className="text-3xl font-bold uppercase tracking-tight mb-2">{product.name}</h1>
-            <p className="text-sm text-gray-600 mb-4">Inspired by Luxury Scents</p>
+            <h1 className="text-xl sm:text-3xl font-bold uppercase tracking-tight mb-2">{product.name}</h1>
+            <p className="text-xs sm:text-sm text-gray-600 mb-3">Inspired by Luxury Scents</p>
             
             {/* Rating */}
-            <div className="flex items-center gap-2 mb-4">
-              <div className="flex text-yellow-400 text-lg">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="flex text-yellow-400 text-base sm:text-lg">
                 <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                  <img src="p1.jpeg" alt="" />
               </div>
-              <span className="text-gray-400 text-sm">(15 Reviews)</span>
+              <span className="text-gray-400 text-xs sm:text-sm">(15 Reviews)</span>
             </div>
 
             {/* Price */}
-            <div className="mb-6">
-              <span className="text-3xl font-bold text-red-600">{formatPrice(product.price)}</span>
-              <span className="text-gray-400 text-lg line-through ml-3 font-normal">
+            <div className="mb-4">
+              <span className="text-xl sm:text-3xl font-bold text-red-600">{formatPrice(product.price)}</span>
+              <span className="text-gray-400 text-base sm:text-lg line-through ml-3 font-normal">
                 {formatPrice(Math.round(product.price * 1.3))}
               </span>
             </div>
 
             {/* Description */}
-            <div className="space-y-4 mb-8">
-              <h3 className="font-bold border-b pb-2 uppercase text-sm tracking-wider">Description</h3>
-              <div className="text-gray-700 leading-relaxed text-sm whitespace-pre-line max-h-96 overflow-y-auto">
+            <div className="space-y-3 mb-6">
+              <h3 className="font-bold border-b pb-1 uppercase text-xs sm:text-sm tracking-wider">Description</h3>
+              <div className="text-gray-700 leading-relaxed text-xs sm:text-sm whitespace-pre-line max-h-96 overflow-y-auto">
                 {product.description}
               </div>
             </div>
 
             {/* Performance Metrics - Only for perfumes */}
             {(product.category === 'men' || product.category === 'women') && (
-              <div className="space-y-4 mb-8">
-                <h3 className="font-bold border-b pb-2 uppercase text-sm tracking-wider">Performance</h3>
-                <ul className="text-sm space-y-2">
+              <div className="space-y-3 mb-6">
+                <h3 className="font-bold border-b pb-1 uppercase text-xs sm:text-sm tracking-wider">Performance</h3>
+                <ul className="text-xs sm:text-sm space-y-1">
                   {performance.map((item, index) => (
                     <li key={index} className="flex justify-between items-center py-1 border-b border-gray-50">
                       <span className="text-gray-600">{item.label}</span>
@@ -249,13 +249,13 @@ const ProductDetail = () => {
             )}
 
             {/* Quantity and Add to Cart */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               <div className="flex items-center">
-                <span className="text-sm uppercase tracking-wider mr-4">Quantity</span>
+                <span className="text-xs uppercase tracking-wider mr-4">Quantity</span>
                 <div className="flex items-center border">
                   <button 
                     onClick={() => setQuantity(Math.max(1, quantity - 1))} 
-                    className="px-4 py-2 border-r hover:bg-gray-100 transition disabled:opacity-50"
+                    className="px-3 py-1 sm:px-4 sm:py-2 border-r hover:bg-gray-100 transition disabled:opacity-50 text-sm"
                     disabled={quantity <= 1}
                   >
                     -
@@ -264,12 +264,12 @@ const ProductDetail = () => {
                     type="number" 
                     value={quantity} 
                     readOnly 
-                    className="w-14 text-center focus:outline-none py-2"
+                    className="w-12 text-center focus:outline-none py-1 sm:py-2 text-sm"
                     min="1"
                   />
                   <button 
                     onClick={() => setQuantity(quantity + 1)} 
-                    className="px-4 py-2 border-l hover:bg-gray-100 transition"
+                    className="px-3 py-1 sm:px-4 sm:py-2 border-l hover:bg-gray-100 transition text-sm"
                   >
                     +
                   </button>
@@ -278,14 +278,14 @@ const ProductDetail = () => {
 
               <button
                 onClick={handleAddToCart}
-                className="w-full bg-red-600 text-white font-bold py-4 uppercase tracking-widest hover:bg-black transition-colors"
+                className="w-full bg-red-600 text-white font-bold py-2 sm:py-4 text-sm sm:text-base uppercase tracking-widest hover:bg-black transition-colors"
               >
                 Add to Cart
               </button>
 
               <button
                 onClick={handleBuyNow}
-                className="w-full border-2 border-black text-black font-bold py-4 uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
+                className="w-full border-2 border-black text-black font-bold py-2 sm:py-4 text-sm sm:text-base uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
               >
                 Buy Now
               </button>
@@ -294,41 +294,41 @@ const ProductDetail = () => {
         </div>
 
         {/* Customer Reviews Section */}
-        <div className="mt-20 border-t pt-10">
-          <h2 className="text-2xl font-bold text-center uppercase mb-10">Customer Reviews</h2>
-          <div className="max-w-3xl mx-auto space-y-8">
-            <div className="border-b pb-6">
-              <div className="flex text-yellow-400 mb-2 text-lg">
+        <div className="mt-10 sm:mt-20 border-t pt-5 sm:pt-10">
+          <h2 className="text-lg sm:text-2xl font-bold text-center uppercase mb-6 sm:mb-10">Customer Reviews</h2>
+          <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
+            <div className="border-b pb-4 sm:pb-6">
+              <div className="flex text-yellow-400 mb-1 text-base sm:text-lg">
                 <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
               </div>
-              <p className="font-bold">Asad Murtaza</p>
-              <p className="text-gray-600 italic">"Very Good Perfume, exactly what I was looking for."</p>
-              <p className="text-xs text-gray-400 mt-2">Verified Purchase</p>
+              <p className="font-bold text-sm sm:text-base">Asad Murtaza</p>
+              <p className="text-gray-600 italic text-xs sm:text-sm">"Very Good Perfume, exactly what I was looking for."</p>
+              <p className="text-xs text-gray-400 mt-1">Verified Purchase</p>
             </div>
-            <div className="border-b pb-6">
-              <div className="flex text-yellow-400 mb-2 text-lg">
+            <div className="border-b pb-4 sm:pb-6">
+              <div className="flex text-yellow-400 mb-1 text-base sm:text-lg">
                 <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
               </div>
-              <p className="font-bold">Ahmed</p>
-              <p className="text-gray-600 italic">"The scent is powerful and stays for the whole day."</p>
-              <p className="text-xs text-gray-400 mt-2">Verified Purchase</p>
+              <p className="font-bold text-sm sm:text-base">Ahmed</p>
+              <p className="text-gray-600 italic text-xs sm:text-sm">"The scent is powerful and stays for the whole day."</p>
+              <p className="text-xs text-gray-400 mt-1">Verified Purchase</p>
             </div>
-            <div className="border-b pb-6">
-              <div className="flex text-yellow-400 mb-2 text-lg">
+            <div className="border-b pb-4 sm:pb-6">
+              <div className="flex text-yellow-400 mb-1 text-base sm:text-lg">
                 <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
               </div>
-              <p className="font-bold">Fatima Khan</p>
-              <p className="text-gray-600 italic">"Beautiful fragrance, very long lasting. Highly recommended!"</p>
-              <p className="text-xs text-gray-400 mt-2">Verified Purchase</p>
+              <p className="font-bold text-sm sm:text-base">Fatima Khan</p>
+              <p className="text-gray-600 italic text-xs sm:text-sm">"Beautiful fragrance, very long lasting. Highly recommended!"</p>
+              <p className="text-xs text-gray-400 mt-1">Verified Purchase</p>
             </div>
           </div>
         </div>
        <img src="p1.jpeg" alt="" />
         {/* Related Products Section */}
         {relatedProducts.length > 0 && (
-          <div className="mt-20 border-t pt-10">
-            <h2 className="text-2xl font-bold text-center uppercase mb-10">You May Also Like</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="mt-10 sm:mt-20 border-t pt-5 sm:pt-10">
+            <h2 className="text-lg sm:text-2xl font-bold text-center uppercase mb-6 sm:mb-10">You May Also Like</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
               {relatedProducts.map(relatedProduct => {
                 const relatedImage = relatedProduct.mainImage || 
                                    (relatedProduct.images?.[0]) || 
@@ -354,8 +354,8 @@ const ProductDetail = () => {
                         }}
                       />
                     </div>
-                    <h3 className="text-xs font-bold uppercase mt-2 truncate">{relatedProduct.name}</h3>
-                    <p className="text-red-600 text-sm font-bold">{formatPrice(relatedProduct.price)}</p>
+                    <h3 className="text-[11px] sm:text-xs font-bold uppercase mt-1 truncate">{relatedProduct.name}</h3>
+                    <p className="text-red-600 text-[11px] sm:text-sm font-bold">{formatPrice(relatedProduct.price)}</p>
                   </div>
                 );
               })}

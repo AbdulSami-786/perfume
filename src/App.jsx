@@ -127,8 +127,8 @@ const Footer = () => {
             <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] mb-6">Get in Touch</h4>
             <div className="text-[10px] text-gray-500 space-y-3 uppercase tracking-widest leading-loose">
               <p>Karachi, Pakistan</p>
-              <p>WhatsApp: +92 300 1234567</p>
-              <p>Email: info@zareenfragrance.com</p>
+              <p>WhatsApp: +92 371 1191925</p>
+              <p>Email: zareenfragrances@gmail.com</p>
             </div>
           </div>
         </div>

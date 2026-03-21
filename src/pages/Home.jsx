@@ -23,14 +23,14 @@ const Home = () => {
     name: "Eid Special| 10%Off PERFUMES",
     originalPrice: 5600,
     price: 4400,
-    image: "ban2.jpeg",
+    image: "b4.jpeg",
     description: "Get all premium fragrances in 10% off "
   };
 
   const categories = [
-    { name: "Reed Diffuser For House Hold", image: "ban1.jpeg", link: "/products?category=bestseller" },
-    { name: "PERFUME FOR HER", image: "b2.jpeg", link: "/products?category=women" },
-    { name: "PERFUME FOR HIM", image: "ban3.jpeg", link: "/products?category=men" },
+    { name: " ", image: "ban1.jpeg", link: "/products?category=bestseller" },
+    { name: "", image: "b2.jpeg", link: "/products?category=women" },
+    { name: "", image: "ban3.jpeg", link: "/products?category=men" },
   ];
 
   // Handle add to cart with animation
@@ -54,26 +54,27 @@ const Home = () => {
     <div className="bg-white font-sans text-gray-900 overflow-x-hidden">
       
       {/* 1. HERO SECTION - Fixed for mobile: full image visible */}
-      <section className="relative w-full h-[70vh] md:h-[80vh] bg-black flex flex-col items-center justify-center text-center px-4">
-        <div className="absolute inset-0 opacity-50">
-          <img 
-            src={dealProduct.image} 
-            alt="Hero" 
-            className="w-full h-full object-contain md:object-cover"
-          />
-        </div>
-        <div className="relative z-10 text-white max-w-2xl">
-          <h2 className="text-[10px] tracking-[0.5em] mb-3 md:mb-4 uppercase font-bold">Zareen Fragrance Exclusive</h2>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif mb-4 md:mb-6 italic leading-tight">Eid Special</h1>
-          <p className="text-base md:text-xl mb-6 md:mb-8 font-light tracking-wide">{dealProduct.description}</p>
-          <Link 
-            to="/products" 
-            className="inline-block bg-white text-black px-6 py-3 md:px-10 md:py-4 hover:bg-transparent hover:text-white border border-white transition-all duration-300 tracking-[0.2em] text-[10px] md:text-xs uppercase font-bold"
-          >
-            Discover the Collection
-          </Link>
-        </div>
-      </section>
+      {/* 1. HERO SECTION - Fixed for mobile: full image covers, reduced height */}
+<section className="relative w-full h-[60vh] md:h-[80vh] bg-black flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+  <div className="absolute inset-0 opacity-50">
+    <img 
+      src={dealProduct.image} 
+      alt="Hero" 
+      className="w-full h-full object-cover"
+    />
+  </div>
+  <div className="relative z-10 text-white max-w-2xl">
+    <h2 className="text-[10px] tracking-[0.5em] mb-3 md:mb-4 uppercase font-bold">Zareen Fragrance Exclusive</h2>
+    <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif mb-4 md:mb-6 italic leading-tight">Eid Special</h1>
+    <p className="text-base md:text-xl mb-6 md:mb-8 font-light tracking-wide">{dealProduct.description}</p>
+    <Link 
+      to="/products" 
+      className="inline-block bg-white text-black px-6 py-3 md:px-10 md:py-4 hover:bg-transparent hover:text-white border border-white transition-all duration-300 tracking-[0.2em] text-[10px] md:text-xs uppercase font-bold"
+    >
+      Discover the Collection
+    </Link>
+  </div>
+</section>
 
       {/* 2. HORIZONTAL SCROLLING CRAZY DEALS */}
       <section className="py-12 md:py-20 bg-gray-50">
@@ -177,9 +178,9 @@ const Home = () => {
             <img 
               src={cat.image} 
               alt={cat.name} 
-              className="w-full h-full object-contain md:object-cover grayscale-[40%] group-hover:grayscale-0 transition duration-700" 
+              className="w-full h-full object-contain md:object-cover grayscale-[0%] group-hover:grayscale-0 transition duration-700" 
             />
-            <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white">
+            <div className="absolute inset-0 bg-black/20 flex flex-col items-center justify-center text-white">
               <h3 className="text-3xl md:text-5xl font-serif italic font-light tracking-[0.1em] mb-3 md:mb-4">
                 {cat.name}
               </h3>
