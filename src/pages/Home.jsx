@@ -64,8 +64,8 @@ const Home = () => {
     />
   </div>
   <div className="relative z-10 text-white max-w-2xl">
-    <h2 className="text-[10px] tracking-[0.5em] mb-3 md:mb-4 uppercase font-bold">Zareen Fragrance Exclusive</h2>
-    <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif mb-4 md:mb-6 italic leading-tight">Eid Special</h1>
+    <h2 className="text-[10px] tracking-[0.5em] mb-3 md:mb-4 uppercase font-bold"></h2>
+    <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif mb-4 md:mb-6 italic leading-tight"></h1>
     <p className="text-base md:text-xl mb-6 md:mb-8 font-light tracking-wide">{dealProduct.description}</p>
     <Link 
       to="/products" 
