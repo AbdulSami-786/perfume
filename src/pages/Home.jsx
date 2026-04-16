@@ -20,11 +20,11 @@ const Home = () => {
 
   const dealProduct = {
     id: 'deal1',
-    name: "Eid Special| 10%Off PERFUMES",
-    originalPrice: 5600,
-    price: 4400,
+    name: "",
+    originalPrice: 0,
+    price: 0,
     image: "b4.jpeg",
-    description: "Get all premium fragrances in 10% off "
+    description: ""
   };
 
   const categories = [
