@@ -23,6 +23,13 @@ const getMainImage = (product) => {
   return '/placeholder.jpg';
 };
 
+// Math function to calculate 10% discount
+const applyDiscount = (originalPrice) => {
+  const discountRate = 0.10; // 10% discount
+  const discountedPrice = originalPrice - (originalPrice * discountRate);
+  return Math.round(discountedPrice); // Round to nearest whole number
+};
+
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -51,6 +58,9 @@ const ProductDetail = () => {
     );
   }
 
+  // Apply 10% discount to product price
+  const discountedPrice = applyDiscount(product.price);
+  
   // Get all images for this product
   const images = getProductImages(product);
   
@@ -79,6 +89,7 @@ const ProductDetail = () => {
   const handleAddToCart = () => {
     const productToAdd = {
       ...product,
+      price: discountedPrice, // Use discounted price for cart
       image: getMainImage(product) // Use main image for cart
     };
     addToCart(productToAdd, quantity);
@@ -87,6 +98,7 @@ const ProductDetail = () => {
   const handleBuyNow = () => {
     const productToAdd = {
       ...product,
+      price: discountedPrice, // Use discounted price for cart
       image: getMainImage(product)
     };
     addToCart(productToAdd, quantity);
@@ -217,11 +229,14 @@ const ProductDetail = () => {
               <span className="text-gray-400 text-xs sm:text-sm">(15 Reviews)</span>
             </div>
 
-            {/* Price */}
+            {/* Price with 10% Discount */}
             <div className="mb-4">
-              <span className="text-xl sm:text-3xl font-bold text-red-600">{formatPrice(product.price)}</span>
+              <span className="text-xl sm:text-3xl font-bold text-red-600">{formatPrice(discountedPrice)}</span>
               <span className="text-gray-400 text-base sm:text-lg line-through ml-3 font-normal">
-                {formatPrice(Math.round(product.price * 1.3))}
+                {formatPrice(product.price)}
+              </span>
+              <span className="ml-3 bg-red-100 text-red-600 text-xs sm:text-sm px-2 py-1 rounded font-semibold">
+                -10% OFF
               </span>
             </div>
 
@@ -280,14 +295,14 @@ const ProductDetail = () => {
                 onClick={handleAddToCart}
                 className="w-full bg-red-600 text-white font-bold py-2 sm:py-4 text-sm sm:text-base uppercase tracking-widest hover:bg-black transition-colors"
               >
-                Add to Cart
+                Add to Cart - {formatPrice(discountedPrice * quantity)}
               </button>
 
               <button
                 onClick={handleBuyNow}
                 className="w-full border-2 border-black text-black font-bold py-2 sm:py-4 text-sm sm:text-base uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
               >
-                Buy Now
+                Buy Now - {formatPrice(discountedPrice * quantity)}
               </button>
             </div>
           </div>
@@ -334,6 +349,7 @@ const ProductDetail = () => {
                                    (relatedProduct.images?.[0]) || 
                                    relatedProduct.image || 
                                    '/placeholder.jpg';
+                const relatedDiscountedPrice = applyDiscount(relatedProduct.price);
                 
                 return (
                   <div 
@@ -355,7 +371,11 @@ const ProductDetail = () => {
                       />
                     </div>
                     <h3 className="text-[11px] sm:text-xs font-bold uppercase mt-1 truncate">{relatedProduct.name}</h3>
-                    <p className="text-red-600 text-[11px] sm:text-sm font-bold">{formatPrice(relatedProduct.price)}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-red-600 text-[11px] sm:text-sm font-bold">{formatPrice(relatedDiscountedPrice)}</p>
+                      <p className="text-gray-400 text-[10px] sm:text-xs line-through">{formatPrice(relatedProduct.price)}</p>
+                    </div>
+                    <span className="text-green-600 text-[10px] sm:text-xs font-semibold">-10% OFF</span>
                   </div>
                 );
               })}

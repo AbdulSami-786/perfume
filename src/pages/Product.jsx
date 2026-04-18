@@ -5,6 +5,13 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
+// Math function to calculate 10% discount
+const applyDiscount = (originalPrice) => {
+  const discountRate = 0.10; // 10% discount
+  const discountedPrice = originalPrice - (originalPrice * discountRate);
+  return Math.round(discountedPrice); // Round to nearest whole number
+};
+
 const Product = () => {
   const { addToCart, cartItems } = useCart();
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -25,7 +32,13 @@ const Product = () => {
   });
 
   const handleAddToCart = (product) => {
-    addToCart(product);
+    const discountedPrice = applyDiscount(product.price);
+    const productWithDiscount = {
+      ...product,
+      price: discountedPrice,
+      originalPrice: product.price // Store original price for reference
+    };
+    addToCart(productWithDiscount);
     setAddedToCart(prev => ({ ...prev, [product.id]: true }));
     setTimeout(() => {
       setAddedToCart(prev => ({ ...prev, [product.id]: false }));
@@ -35,6 +48,16 @@ const Product = () => {
   const getItemQuantity = (productId) => {
     const item = cartItems.find(item => item.id === productId);
     return item ? item.quantity : 0;
+  };
+
+  // Format price
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('en-PK', {
+      style: 'currency',
+      currency: 'PKR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(price);
   };
 
   return (
@@ -93,6 +116,7 @@ const Product = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 md:gap-x-4 gap-y-8 md:gap-y-12">
             {sortedProducts.map(product => {
               const quantity = getItemQuantity(product.id);
+              const discountedPrice = applyDiscount(product.price);
               
               return (
                 <div key={product.id} className="group flex flex-col items-center">
@@ -103,11 +127,9 @@ const Product = () => {
                       alt={product.name} 
                       className="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform duration-700"
                     />
-                    {product.originalPrice && (
-                      <div className="absolute top-0 left-0 bg-black text-white px-2 md:px-3 py-1 md:py-1.5 text-[7px] md:text-[8px] tracking-widest font-bold">
-                        SALE
-                      </div>
-                    )}
+                    <div className="absolute top-0 left-0 bg-black text-white px-2 md:px-3 py-1 md:py-1.5 text-[7px] md:text-[8px] tracking-widest font-bold">
+                      -10% OFF
+                    </div>
                     {quantity > 0 && (
                       <div className="absolute top-0 right-0 bg-black text-white w-5 md:w-6 h-5 md:h-6 flex items-center justify-center text-[8px] md:text-[10px] font-bold">
                         {quantity}
@@ -130,14 +152,19 @@ const Product = () => {
                     </Link>
                     
                     <div className="mb-4 md:mb-6">
-                      {product.originalPrice ? (
-                        <div className="flex items-center gap-2 md:gap-3">
-                          <span className="text-gray-400 line-through text-[10px] md:text-xs font-light tracking-tighter italic">Rs.{product.originalPrice}</span>
-                          <span className="text-sm md:text-base font-bold text-black font-serif">Rs.{product.price}</span>
-                        </div>
-                      ) : (
-                        <span className="text-sm md:text-base font-bold text-black font-serif">Rs.{product.price}</span>
-                      )}
+                      <div className="flex items-center gap-2 md:gap-3">
+                        <span className="text-gray-400 line-through text-[10px] md:text-xs font-light tracking-tighter italic">
+                          {formatPrice(product.price)}
+                        </span>
+                        <span className="text-sm md:text-base font-bold text-red-600 font-serif">
+                          {formatPrice(discountedPrice)}
+                        </span>
+                      </div>
+                      <div className="mt-1 md:mt-2">
+                        <span className="bg-red-100 text-red-600 text-[7px] md:text-[8px] px-1.5 md:px-2 py-0.5 md:py-1 rounded font-semibold">
+                          Save {formatPrice(product.price - discountedPrice)}
+                        </span>
+                      </div>
                     </div>
 
                     <button
