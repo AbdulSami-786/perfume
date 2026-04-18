@@ -70,7 +70,11 @@ const CarouselSlider = () => {
   const currentSlide = slides[currentIndex];
 
   return (
-    <section className="relative w-full h-[60vh] md:h-[100vh] bg-black flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+    <section style={{
+  minHeight: "100vh",
+  ...(window.innerWidth <= 768 && { minHeight: "30vh" })
+}}
+ className="relative w-full h-[60vh]  bg-black flex flex-col items-center justify-center text-center px-4 overflow-hidden">
       {/* Background Image with Fade Transition - BLACK OVERLAY REMOVED */}
       <div className="absolute inset-0 transition-opacity duration-1000 ease-in-out">
         <img 
