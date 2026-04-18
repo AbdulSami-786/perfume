@@ -326,13 +326,16 @@ const Home = () => {
       </section>
 
       {/* 4. CATEGORY BANNERS - Fixed for mobile: full image visible */}
-      <section className="space-y-4 mb-12 md:mb-20 px-4">
+      <section  className="space-y-0 mb-0 md:mb-0 px-0">
         {categories.map((cat, idx) => (
-          <Link key={idx} to={cat.link} className="relative block h-64 md:h-[100vh] w-full group overflow-hidden">
+          <Link  style={{
+  minHeight: "100vh",
+  ...(window.innerWidth <= 768 && { minHeight: "30vh" })
+}} key={idx} to={cat.link} className="relative block  w-full group overflow-hidden">
             <img 
               src={cat.image} 
               alt={cat.name} 
-              className="w-full h-full object-cover grayscale-[0%] group-hover:grayscale-0 transition duration-700" 
+              className="w-full grayscale-[0%] group-hover:grayscale-0 transition duration-700" 
             />
             <div className="absolute inset-0 bg-black/20 flex flex-col items-center justify-center text-white">
               <h3 className="text-3xl md:text-5xl font-serif italic font-light tracking-[0.1em] mb-3 md:mb-4">
