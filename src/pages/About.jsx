@@ -1,174 +1,162 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Award, ShieldCheck, Heart, Sparkles, Car, Home, Package, Truck } from 'lucide-react';
+import { Car, Gift, Heart, Home, Package, ShieldCheck, Sparkles, Truck } from 'lucide-react';
+import { categoryOrder } from '../data/products';
+import { assetUrl } from '../lib/site';
+import Reveal from '../components/Reveal';
+import SectionHeading from '../components/SectionHeading';
+
+const story = [
+  {
+    title: 'The inspiration',
+    text: 'People often have a favourite perfume they love to wear. We wanted them to experience that same scent in their car and their room as well.',
+  },
+  {
+    title: 'The name',
+    text: 'Zareen Fragrance is named after the grandmother of our founder, Saim Sheikh, whose name was Zareen — a meaningful, personal touch behind the brand.',
+  },
+  {
+    title: 'Our promise',
+    text: 'Our team has more than five years of experience working with fragrance oils and scent development. We work with verified vendors and partners and never compromise on quality.',
+  },
+];
+
+const range = [
+  { icon: Gift, title: 'Eau de Parfum', text: 'Signature 50 ml perfumes for him and for her.' },
+  { icon: Home, title: 'Room diffusers', text: 'Transform your living spaces with signature aromas.' },
+  { icon: Car, title: 'Car diffusers', text: 'Take your favourite scent on every journey.' },
+  { icon: Package, title: 'Tester box', text: 'Explore multiple fragrances before choosing a favourite.' },
+];
+
+const values = [
+  { icon: Sparkles, title: 'Premium quality', text: 'High-quality, perfume-inspired fragrances crafted with expertise.' },
+  { icon: Heart, title: 'A personal touch', text: 'Scents for both men and women to match their personality.' },
+  { icon: ShieldCheck, title: 'Verified vendors', text: 'Trusted partners, and no compromise on quality.' },
+  { icon: Truck, title: 'Easy delivery', text: 'Cash on delivery for trust and convenience.' },
+];
 
 const About = () => {
-  const brandName = "ZAREEN FRAGRANCES";
-
-  const storyPoints = [
-    { 
-      title: 'The Inspiration', 
-      description: 'The idea behind Zareen Fragrances came from a simple inspiration: people often have a favorite perfume they love to wear, and we wanted them to experience that same scent in their car and their room as well.'
-    },
-    { 
-      title: 'The Name', 
-      description: 'The name "Zareen Fragrances" is inspired by the grandmother of the brand owner, Saim Sheikh, whose name was Zareen. This gives the brand a meaningful and personal touch.'
-    },
-    { 
-      title: 'Our Promise', 
-      description: 'Our team has more than five years of experience working with fragrance oils and scent development. We work with verified vendors and partners and never compromise on quality.'
-    }
-  ];
-
-  const products = [
-    { icon: <Car size={32} strokeWidth={1}/>, title: 'Car Diffusers', description: 'Take your favorite scent on every journey' },
-    { icon: <Home size={32} strokeWidth={1}/>, title: 'Room Diffusers', description: 'Transform your living spaces with signature aromas' },
-    { icon: <Package size={32} strokeWidth={1}/>, title: 'Tester Boxes', description: 'Explore multiple fragrances before choosing your favorite' }
-  ];
-
-  const values = [
-    { icon: <Sparkles size={32} strokeWidth={1}/>, title: 'Premium Quality', description: 'High-quality perfume-inspired diffusers crafted with expertise' },
-    { icon: <Heart size={32} strokeWidth={1}/>, title: 'Personal Touch', description: 'Fragrances for both male and female customers to match their personality' },
-    { icon: <ShieldCheck size={32} strokeWidth={1}/>, title: 'Verified Vendors', description: 'Working with trusted partners, never compromising on quality' },
-    { icon: <Truck size={32} strokeWidth={1}/>, title: 'Easy Delivery', description: 'Cash on Delivery for trust and customer convenience' }
-  ];
+  useEffect(() => { document.title = 'Our Story | Zareen Fragrance'; }, []);
 
   return (
-    <div className="bg-white text-black font-sans">
-      {/* 1. HERO SECTION */}
-      <div className="relative h-[60vh] flex items-center justify-center bg-black overflow-hidden">
-        <div className="absolute inset-0 opacity-50">
-          <img 
-            src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1600&q=80" 
-            className="w-full h-full object-cover" 
-            alt="Fragrance Diffuser"
-          />
-        </div>
-        <div className="relative z-10 text-center px-4">
-          <h2 className="text-[10px] tracking-[0.5em] text-white uppercase mb-4 font-bold">ESTABLISHED MARCH 1, 2026</h2>
-          <h1 className="text-5xl md:text-7xl font-serif italic text-white mb-6">Our Story</h1>
-          <div className="w-16 h-px bg-white mx-auto"></div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 py-20">
-        {/* 2. BRAND INTRODUCTION */}
-        <div className="max-w-4xl mx-auto text-center mb-20">
-          <h2 className="text-3xl font-serif italic mb-8 uppercase tracking-widest">Welcome to Zareen Fragrances</h2>
-          <p className="text-gray-600 text-lg leading-relaxed mb-6">
-            Zareen Fragrances is a premium fragrance brand that provides high-quality perfume-inspired car diffusers and room diffusers. Our goal is to allow people to enjoy their favorite fragrances not only on their bodies but also in their cars and living spaces.
-          </p>
-          <p className="text-gray-500 italic">
-            Founded on March 1, 2026, in Karachi, Pakistan, we cater to both male and female customers who want to enhance their lifestyle with a unique and pleasant fragrance experience.
+    <div>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-charcoal text-white">
+        <div className="pointer-events-none absolute -top-32 -right-24 w-[34rem] h-[34rem] rounded-full bg-gold/20 blur-3xl" />
+        <div className="relative container mx-auto px-5 py-16 md:py-36 text-center">
+          <p className="eyebrow !text-gold-light mb-6">Established 1 March 2026 · Karachi</p>
+          <h1 className="text-6xl md:text-8xl text-white">Our story</h1>
+          <div className="w-16 h-px bg-gold mx-auto mt-8 mb-8" />
+          <p className="max-w-xl mx-auto text-white/70 leading-relaxed">
+            A fragrance house built on a simple belief: a great scent belongs everywhere you are — on you, in your car and in your home.
           </p>
         </div>
+      </section>
 
-        {/* 3. THE STORY - Three Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-32">
-          {storyPoints.map((point, idx) => (
-            <div key={idx} className="text-center p-8 border border-gray-100 hover:border-black transition-colors duration-500">
-              <div className="w-12 h-12 bg-black rounded-full mx-auto mb-6 flex items-center justify-center">
-                <span className="text-white font-serif italic">{idx + 1}</span>
-              </div>
-              <h3 className="text-sm tracking-[0.3em] font-bold uppercase mb-4">{point.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{point.description}</p>
+      {/* Intro */}
+      <section className="container mx-auto px-5 py-14 md:py-28">
+        <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center max-w-6xl mx-auto">
+          <Reveal>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="aspect-[3/4] bg-white border border-line/70 overflow-hidden"><img src={assetUrl('/p1.jpeg')} alt="Musk Al Rawdah perfume" loading="lazy" className="w-full h-full object-contain p-2" /></div>
+              <div className="aspect-[3/4] bg-white border border-line/70 overflow-hidden mt-10"><img src={assetUrl('/p2.jpeg')} alt="Pink Aura perfume" loading="lazy" className="w-full h-full object-contain p-2" /></div>
             </div>
-          ))}
+          </Reveal>
+          <Reveal delay={120}>
+            <p className="eyebrow mb-5">Welcome</p>
+            <h2 className="text-4xl md:text-5xl mb-7">Welcome to Zareen Fragrance</h2>
+            <p className="text-mute leading-relaxed mb-5">
+              Zareen Fragrance is a premium fragrance brand offering high-quality perfumes, perfume-inspired car diffusers and room diffusers. Our goal is to let people enjoy their favourite fragrances not only on themselves, but in their cars and living spaces too.
+            </p>
+            <p className="text-mute leading-relaxed">
+              Founded on 1 March 2026 in Karachi, Pakistan, we serve men and women who want to elevate their lifestyle with a unique and pleasant fragrance experience.
+            </p>
+          </Reveal>
         </div>
+      </section>
 
-        {/* 4. OUR PRODUCTS */}
-        <div className="mb-32">
-          <h2 className="text-center text-2xl font-serif italic tracking-widest mb-4 uppercase">Our Collection</h2>
-          <p className="text-center text-gray-400 text-xs tracking-[0.2em] uppercase mb-16">Specially designed for male and female categories</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {products.map((product, idx) => (
-              <div key={idx} className="text-center group">
-                <div className="mb-6 flex justify-center text-gray-600 group-hover:text-black transition-colors duration-500">
-                  {product.icon}
+      {/* Story */}
+      <section className="bg-sand border-y border-line">
+        <div className="container mx-auto px-5 py-14 md:py-24">
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {story.map((s, i) => (
+              <Reveal key={s.title} delay={i * 100}>
+                <div className="h-full bg-white border border-line/70 p-9 text-center">
+                  <span className="font-display text-6xl text-gold/70 leading-none">0{i + 1}</span>
+                  <h3 className="text-3xl mt-3 mb-4">{s.title}</h3>
+                  <p className="text-sm text-mute leading-relaxed">{s.text}</p>
                 </div>
-                <h3 className="text-sm tracking-[0.3em] font-bold uppercase mb-4">{product.title}</h3>
-                <p className="text-xs text-gray-500 leading-relaxed max-w-xs mx-auto">{product.description}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* 5. CORE VALUES */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-32 border-y border-gray-100 py-20">
-          {values.map((val, idx) => (
-            <div key={idx} className="text-center group">
-              <div className="mb-6 flex justify-center text-gray-400 group-hover:text-black transition-colors duration-500">
-                {val.icon}
-              </div>
-              <h3 className="text-xs tracking-[0.3em] font-bold uppercase mb-4">{val.title}</h3>
-              <p className="text-[11px] text-gray-500 leading-relaxed uppercase tracking-tighter">{val.description}</p>
-            </div>
+      {/* Range */}
+      <section className="container mx-auto px-5 py-14 md:py-28">
+        <Reveal><SectionHeading eyebrow="What we make" title="Our collection" text="Designed for men and women, for the body, the car and the home." /></Reveal>
+        <div className="mt-10 md:mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          {range.map(({ icon: Icon, title, text }, i) => (
+            <Reveal key={title} delay={i * 80} className="text-center">
+              <span className="mx-auto mb-5 w-16 h-16 rounded-full border border-gold/50 flex items-center justify-center text-gold"><Icon size={24} strokeWidth={1.25} /></span>
+              <h3 className="text-2xl mb-2">{title}</h3>
+              <p className="text-sm text-mute max-w-[14rem] mx-auto leading-relaxed">{text}</p>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Philosophy */}
+      <section className="bg-charcoal text-white">
+        <Reveal className="container mx-auto px-5 py-16 md:py-32 max-w-4xl text-center">
+          <p className="eyebrow !text-gold-light mb-7">Our philosophy</p>
+          <blockquote className="font-display text-3xl md:text-5xl leading-[1.2] italic text-white">
+            “People wear great clothes and present themselves well — but a great fragrance is always essential, whether it's on your body, in your car or in your room.”
+          </blockquote>
+        </Reveal>
+      </section>
+
+      {/* Values + stats */}
+      <section className="container mx-auto px-5 py-14 md:py-28">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 max-w-6xl mx-auto">
+          {values.map(({ icon: Icon, title, text }, i) => (
+            <Reveal key={title} delay={i * 80} className="text-center">
+              <Icon size={30} strokeWidth={1} className="mx-auto mb-5 text-gold" />
+              <h3 className="font-sans text-[0.75rem] font-medium tracking-[0.2em] uppercase mb-3">{title}</h3>
+              <p className="text-sm text-mute leading-relaxed">{text}</p>
+            </Reveal>
           ))}
         </div>
 
-        {/* 6. OUR MESSAGE */}
-        <div className="bg-gray-50 p-20 mb-20 text-center max-w-4xl mx-auto">
-          <h2 className="text-2xl font-serif italic mb-8 uppercase tracking-widest">Our Philosophy</h2>
-          <p className="text-gray-700 text-lg leading-relaxed italic">
-            "People wear great clothes and present themselves well, but a great fragrance is always essential—whether it's on your body, in your car, or in your room."
-          </p>
+        <div className="mt-20 grid grid-cols-3 border-y border-line max-w-4xl mx-auto divide-x divide-line">
+          {[
+            ['5+', 'Years of experience'],
+            ['2026', 'Founded in Karachi'],
+            [String(categoryOrder.length), 'Collections'],
+          ].map(([n, l]) => (
+            <div key={l} className="py-10 text-center px-2">
+              <p className="font-display text-5xl md:text-6xl">{n}</p>
+              <p className="mt-2 text-[0.66rem] md:text-[0.68rem] tracking-[0.2em] uppercase text-mute">{l}</p>
+            </div>
+          ))}
         </div>
+      </section>
 
-        {/* 7. STATS - Clean Banner */}
-        <div className="bg-black text-white py-20 px-4 mb-20">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 text-center max-w-5xl mx-auto">
-            <div>
-              <div className="text-3xl font-serif mb-2 italic">5+</div>
-              <div className="text-[9px] tracking-[0.4em] uppercase opacity-60">Years Experience</div>
-            </div>
-            <div>
-              <div className="text-3xl font-serif mb-2 italic">100%</div>
-              <div className="text-[9px] tracking-[0.4em] uppercase opacity-60">Quality Assured</div>
-            </div>
-            <div>
-              <div className="text-3xl font-serif mb-2 italic">2026</div>
-              <div className="text-[9px] tracking-[0.4em] uppercase opacity-60">Founded</div>
-            </div>
-            <div>
-              <div className="text-3xl font-serif mb-2 italic">∞</div>
-              <div className="text-[9px] tracking-[0.4em] uppercase opacity-60">Signature Scents</div>
-            </div>
+      {/* Vision + CTA */}
+      <section className="bg-sand border-t border-line">
+        <Reveal className="container mx-auto px-5 py-14 md:py-28 text-center max-w-3xl">
+          <p className="eyebrow mb-5">Our vision</p>
+          <h2 className="text-4xl md:text-5xl mb-6">A fragrance identity that goes with you</h2>
+          <p className="text-mute leading-relaxed mb-10">
+            To expand Zareen Fragrance across Pakistan and eventually into international markets, allowing more people to experience our scents and build a fragrance identity that stays with them wherever they go.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/products" className="btn btn-dark">Explore the collection</Link>
+            <Link to="/contact" className="btn btn-outline">Get in touch</Link>
           </div>
-        </div>
-
-        {/* 8. VISION SECTION */}
-        <div className="text-center py-10 mb-10">
-          <h2 className="text-2xl font-serif italic mb-6 uppercase tracking-widest">Our Vision</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">
-            To expand Zareen Fragrances across Pakistan and eventually into international markets, 
-            allowing more people to experience our unique scents and build a fragrance identity 
-            that stays with them wherever they go.
-          </p>
-        </div>
-
-        {/* 9. CALL TO ACTION */}
-        <div className="text-center py-20 border border-gray-100">
-          <h2 className="text-3xl font-serif italic mb-6">Find Your Signature Scent</h2>
-          <p className="text-gray-400 text-xs tracking-[0.2em] uppercase mb-10 max-w-lg mx-auto leading-loose">
-            Explore our fragrance details, view product images, and place orders easily through WhatsApp
-          </p>
-          <div className="flex flex-col md:flex-row justify-center gap-6">
-            <Link 
-              to="/products" 
-              className="bg-black text-white px-12 py-4 text-[10px] tracking-[0.3em] font-bold uppercase hover:bg-gray-800 transition shadow-xl"
-            >
-              Explore Collection
-            </Link>
-            <Link 
-              to="/contact" 
-              className="border border-black text-black px-12 py-4 text-[10px] tracking-[0.3em] font-bold uppercase hover:bg-black hover:text-white transition"
-            >
-              Order via WhatsApp
-            </Link>
-          </div>
-          <p className="text-gray-400 text-xs mt-6">Cash on Delivery available for your convenience</p>
-        </div>
-      </div>
+          <p className="mt-6 text-xs text-mute">Cash on delivery and bank transfer available</p>
+        </Reveal>
+      </section>
     </div>
   );
 };

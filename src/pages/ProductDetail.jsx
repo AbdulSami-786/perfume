@@ -1,390 +1,244 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import {
+  Check, ChevronDown, Gift, Minus, Plus, ShieldCheck, Truck, Wallet,
+} from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { products } from '../data/products';
-import { useState } from 'react';
+import { categoryMeta, getProduct, imageBgFor, isPerfume, products } from '../data/products';
+import {
+  applyDiscount, assetUrl, formatPrice, FREE_SHIPPING_THRESHOLD, SHIPPING_FEE,
+} from '../lib/site';
+import ProductCard from '../components/ProductCard';
+import Reveal from '../components/Reveal';
+import Stars from '../components/Stars';
+import WishButton from '../components/WishButton';
+import ReviewsSection from '../components/ReviewsSection';
+import { useReviews } from '../lib/useReviews';
+import PageHeader from '../components/PageHeader';
 
-// Helper function to get product images
-const getProductImages = (product) => {
-  if (!product) return [];
-  if (product.images && Array.isArray(product.images) && product.images.length > 0) {
-    return product.images;
-  }
-  if (product.mainImage) return [product.mainImage];
-  if (product.image) return [product.image];
-  return ['/placeholder.jpg'];
-};
+// Placeholder performance specs for perfumes (existing site content).
+const performance = [
+  { label: 'Concentration', value: '30% – 35%' },
+  { label: 'Longevity', value: 'Up to 8 – 10 hours' },
+  { label: 'Sillage', value: 'Strong' },
+];
 
-// Helper function to get main image
-const getMainImage = (product) => {
-  if (!product) return '/placeholder.jpg';
-  if (product.mainImage) return product.mainImage;
-  if (product.images && product.images.length > 0) return product.images[0];
-  if (product.image) return product.image;
-  return '/placeholder.jpg';
-};
-
-// Math function to calculate 10% discount
-const applyDiscount = (originalPrice) => {
-  const discountRate = 0.10; // 10% discount
-  const discountedPrice = originalPrice - (originalPrice * discountRate);
-  return Math.round(discountedPrice); // Round to nearest whole number
-};
-
-const ProductDetail = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const product = products.find(p => p.id === parseInt(id));
-  const { addToCart } = useCart();
-  const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(0);
-
-  // Swipe state for mobile
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
-
-  if (!product) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center py-20 font-serif">
-          <h2 className="text-2xl mb-4">Product not found</h2>
-          <button 
-            onClick={() => navigate('/products')} 
-            className="bg-black text-white px-8 py-3 text-sm uppercase tracking-widest hover:bg-gray-800 transition"
-          >
-            Browse Products
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // Apply 10% discount to product price
-  const discountedPrice = applyDiscount(product.price);
-  
-  // Get all images for this product
-  const images = getProductImages(product);
-  
-  // Get related products (same category, exclude current)
-  const relatedProducts = products
-    .filter(p => p.category === product.category && p.id !== product.id)
-    .slice(0, 4);
-
-  // Mock data for performance
-  const performance = [
-    { label: "Concentration", value: "30% to 35%" },
-    { label: "Lasting", value: "Up to 8 - 10 Hours" },
-    { label: "Sillage", value: "Strong" }
-  ];
-
-  // Format price
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-PK', {
-      style: 'currency',
-      currency: 'PKR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(price);
-  };
-
-  const handleAddToCart = () => {
-    const productToAdd = {
-      ...product,
-      price: discountedPrice, // Use discounted price for cart
-      image: getMainImage(product) // Use main image for cart
-    };
-    addToCart(productToAdd, quantity);
-  };
-
-  const handleBuyNow = () => {
-    const productToAdd = {
-      ...product,
-      price: discountedPrice, // Use discounted price for cart
-      image: getMainImage(product)
-    };
-    addToCart(productToAdd, quantity);
-    navigate('/cart');
-  };
-
-  // Swipe handlers
-  const handleTouchStart = (e) => {
-    setTouchStart(e.touches[0].clientX);
-    setTouchEnd(null);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const diff = touchStart - touchEnd;
-    const threshold = 50; // minimum swipe distance
-
-    if (Math.abs(diff) > threshold) {
-      if (diff > 0 && selectedImage < images.length - 1) {
-        // Swipe left -> next image
-        setSelectedImage(prev => prev + 1);
-      } else if (diff < 0 && selectedImage > 0) {
-        // Swipe right -> previous image
-        setSelectedImage(prev => prev - 1);
-      }
-    }
-
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
-
+const Accordion = ({ title, defaultOpen = false, children }) => {
+  const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="bg-white text-black font-sans">
-      <div className="container mx-auto px-4 py-4 sm:py-8 max-w-6xl">
-        
-        {/* Breadcrumb / Back */}
-        <button 
-          onClick={() => navigate(-1)} 
-          className="mb-4 sm:mb-6 text-xs sm:text-sm uppercase tracking-widest text-gray-500 hover:text-black transition-colors flex items-center gap-2"
-        >
-          ← Back to Collection
-        </button>
-
-        <div className="flex flex-col lg:flex-row gap-6 sm:gap-12">
-          {/* Left: Product Images */}
-          <div className="lg:w-1/2 flex gap-4">
-            {/* Thumbnail Gallery - Only show if multiple images */}
-            {images.length > 1 && (
-              <div className="hidden lg:flex flex-col gap-2 w-20">
-                {images.map((img, index) => (
-                  <div 
-                    key={index}
-                    className={`border-2 cursor-pointer transition-all duration-300 overflow-hidden ${
-                      selectedImage === index 
-                        ? 'border-black' 
-                        : 'border-transparent hover:border-gray-300'
-                    }`}
-                    onClick={() => setSelectedImage(index)}
-                  >
-                    <img 
-                      src={img} 
-                      alt={`${product.name} - View ${index + 1}`}
-                      className="w-full h-20 object-cover"
-                      onError={(e) => {
-                        e.target.src = '/placeholder.jpg';
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-            
-            {/* Main Image Display - with swipe support */}
-            <div 
-              className="flex-1"
-              onTouchStart={images.length > 1 ? handleTouchStart : undefined}
-              onTouchMove={images.length > 1 ? handleTouchMove : undefined}
-              onTouchEnd={images.length > 1 ? handleTouchEnd : undefined}
-            >
-              <div className="border border-gray-100 overflow-hidden bg-gray-50">
-                <img 
-                  src={images[selectedImage]} 
-                  alt={product.name} 
-                  className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
-                  onError={(e) => {
-                    e.target.src = '/placeholder.jpg';
-                  }}
-                />
-              </div>
-              
-              {/* Mobile Image Dots */}
-              {images.length > 1 && (
-                <div className="flex justify-center gap-2 mt-4 lg:hidden">
-                  {images.map((_, index) => (
-                    <button
-                      key={index}
-                      className={`h-2 rounded-full transition-all ${
-                        selectedImage === index ? 'w-6 bg-black' : 'w-2 bg-gray-300'
-                      }`}
-                      onClick={() => setSelectedImage(index)}
-                      aria-label={`View image ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              )}
-              
-              <div className="text-center mt-4 font-bold tracking-tighter text-base sm:text-xl">
-                {product.category === 'men' ? 'MEN' : product.category === 'women' ? 'WOMEN' : 'UNISEX'}
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Product Info */}
-          <div className="lg:w-1/2">
-            <h1 className="text-xl sm:text-3xl font-bold uppercase tracking-tight mb-2">{product.name}</h1>
-            <p className="text-xs sm:text-sm text-gray-600 mb-3">Inspired by Luxury Scents</p>
-            
-            {/* Rating */}
-            <div className="flex items-center gap-2 mb-3">
-              <div className="flex text-yellow-400 text-base sm:text-lg">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                 <img src="p1.jpeg" alt="" />
-              </div>
-              <span className="text-gray-400 text-xs sm:text-sm">(15 Reviews)</span>
-            </div>
-
-            {/* Price with 10% Discount */}
-            <div className="mb-4">
-              <span className="text-xl sm:text-3xl font-bold text-red-600">{formatPrice(discountedPrice)}</span>
-              <span className="text-gray-400 text-base sm:text-lg line-through ml-3 font-normal">
-                {formatPrice(product.price)}
-              </span>
-              <span className="ml-3 bg-red-100 text-red-600 text-xs sm:text-sm px-2 py-1 rounded font-semibold">
-                -10% OFF
-              </span>
-            </div>
-
-            {/* Description */}
-            <div className="space-y-3 mb-6">
-              <h3 className="font-bold border-b pb-1 uppercase text-xs sm:text-sm tracking-wider">Description</h3>
-              <div className="text-gray-700 leading-relaxed text-xs sm:text-sm whitespace-pre-line max-h-96 overflow-y-auto">
-                {product.description}
-              </div>
-            </div>
-
-            {/* Performance Metrics - Only for perfumes */}
-            {(product.category === 'men' || product.category === 'women') && (
-              <div className="space-y-3 mb-6">
-                <h3 className="font-bold border-b pb-1 uppercase text-xs sm:text-sm tracking-wider">Performance</h3>
-                <ul className="text-xs sm:text-sm space-y-1">
-                  {performance.map((item, index) => (
-                    <li key={index} className="flex justify-between items-center py-1 border-b border-gray-50">
-                      <span className="text-gray-600">{item.label}</span>
-                      <span className="font-semibold">{item.value}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Quantity and Add to Cart */}
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center">
-                <span className="text-xs uppercase tracking-wider mr-4">Quantity</span>
-                <div className="flex items-center border">
-                  <button 
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))} 
-                    className="px-3 py-1 sm:px-4 sm:py-2 border-r hover:bg-gray-100 transition disabled:opacity-50 text-sm"
-                    disabled={quantity <= 1}
-                  >
-                    -
-                  </button>
-                  <input 
-                    type="number" 
-                    value={quantity} 
-                    readOnly 
-                    className="w-12 text-center focus:outline-none py-1 sm:py-2 text-sm"
-                    min="1"
-                  />
-                  <button 
-                    onClick={() => setQuantity(quantity + 1)} 
-                    className="px-3 py-1 sm:px-4 sm:py-2 border-l hover:bg-gray-100 transition text-sm"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <button
-                onClick={handleAddToCart}
-                className="w-full bg-red-600 text-white font-bold py-2 sm:py-4 text-sm sm:text-base uppercase tracking-widest hover:bg-black transition-colors"
-              >
-                Add to Cart - {formatPrice(discountedPrice * quantity)}
-              </button>
-
-              <button
-                onClick={handleBuyNow}
-                className="w-full border-2 border-black text-black font-bold py-2 sm:py-4 text-sm sm:text-base uppercase tracking-widest hover:bg-black hover:text-white transition-colors"
-              >
-                Buy Now - {formatPrice(discountedPrice * quantity)}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Customer Reviews Section */}
-        <div className="mt-10 sm:mt-20 border-t pt-5 sm:pt-10">
-          <h2 className="text-lg sm:text-2xl font-bold text-center uppercase mb-6 sm:mb-10">Customer Reviews</h2>
-          <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
-            <div className="border-b pb-4 sm:pb-6">
-              <div className="flex text-yellow-400 mb-1 text-base sm:text-lg">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-              </div>
-              <p className="font-bold text-sm sm:text-base">Asad Murtaza</p>
-              <p className="text-gray-600 italic text-xs sm:text-sm">"Very Good Perfume, exactly what I was looking for."</p>
-              <p className="text-xs text-gray-400 mt-1">Verified Purchase</p>
-            </div>
-            <div className="border-b pb-4 sm:pb-6">
-              <div className="flex text-yellow-400 mb-1 text-base sm:text-lg">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-              </div>
-              <p className="font-bold text-sm sm:text-base">Ahmed</p>
-              <p className="text-gray-600 italic text-xs sm:text-sm">"The scent is powerful and stays for the whole day."</p>
-              <p className="text-xs text-gray-400 mt-1">Verified Purchase</p>
-            </div>
-            <div className="border-b pb-4 sm:pb-6">
-              <div className="flex text-yellow-400 mb-1 text-base sm:text-lg">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
-              </div>
-              <p className="font-bold text-sm sm:text-base">Fatima Khan</p>
-              <p className="text-gray-600 italic text-xs sm:text-sm">"Beautiful fragrance, very long lasting. Highly recommended!"</p>
-              <p className="text-xs text-gray-400 mt-1">Verified Purchase</p>
-            </div>
-          </div>
-        </div>
-       <img src="p1.jpeg" alt="" />
-        {/* Related Products Section */}
-        {relatedProducts.length > 0 && (
-          <div className="mt-10 sm:mt-20 border-t pt-5 sm:pt-10">
-            <h2 className="text-lg sm:text-2xl font-bold text-center uppercase mb-6 sm:mb-10">You May Also Like</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
-              {relatedProducts.map(relatedProduct => {
-                const relatedImage = relatedProduct.mainImage || 
-                                   (relatedProduct.images?.[0]) || 
-                                   relatedProduct.image || 
-                                   '/placeholder.jpg';
-                const relatedDiscountedPrice = applyDiscount(relatedProduct.price);
-                
-                return (
-                  <div 
-                    key={relatedProduct.id} 
-                    className="cursor-pointer group"
-                    onClick={() => {
-                      navigate(`/product/${relatedProduct.id}`);
-                      window.scrollTo(0, 0);
-                    }}
-                  >
-                    <div className="overflow-hidden bg-gray-50 aspect-square">
-                      <img 
-                     src={`../../${relatedImage}`} 
-                        alt={relatedProduct.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        onError={(e) => {
-                          e.target.src = '/placeholder.jpg';
-                        }}
-                      />
-                    </div>
-                    <h3 className="text-[11px] sm:text-xs font-bold uppercase mt-1 truncate">{relatedProduct.name}</h3>
-                    <div className="flex items-center gap-2">
-                      <p className="text-red-600 text-[11px] sm:text-sm font-bold">{formatPrice(relatedDiscountedPrice)}</p>
-                      <p className="text-gray-400 text-[10px] sm:text-xs line-through">{formatPrice(relatedProduct.price)}</p>
-                    </div>
-                    <span className="text-green-600 text-[10px] sm:text-xs font-semibold">-10% OFF</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
+    <div className="border-b border-line">
+      <button onClick={() => setOpen(!open)} aria-expanded={open} className="w-full flex items-center justify-between py-5 text-left">
+        <span className="text-[0.74rem] font-medium tracking-[0.22em] uppercase">{title}</span>
+        <ChevronDown size={17} className={`transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
+      </button>
+      <div className={`grid transition-all duration-300 ${open ? 'grid-rows-[1fr] pb-6' : 'grid-rows-[0fr]'}`}>
+        <div className="overflow-hidden text-sm text-mute leading-relaxed">{children}</div>
       </div>
     </div>
   );
+};
+
+const ProductView = ({ id }) => {
+  const navigate = useNavigate();
+  const product = getProduct(id);
+  const { addToCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
+  const [selected, setSelected] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [justAdded, setJustAdded] = useState(false);
+  const reviewData = useReviews(Number(id));
+
+  useEffect(() => {
+    if (product) document.title = `${product.shortName} | Zareen Fragrance`;
+  }, [product]);
+
+  if (!product) {
+    return (
+      <section className="container mx-auto px-5 py-28 text-center">
+        <h1 className="text-5xl mb-4">Product not found</h1>
+        <p className="text-mute mb-8">This item may have been moved or is no longer available.</p>
+        <Link to="/products" className="btn btn-dark">Browse the collection</Link>
+      </section>
+    );
+  }
+
+  const images = product.images?.length ? product.images : [product.mainImage];
+  const price = applyDiscount(product.price);
+  const meta = categoryMeta[product.category];
+  const related = products.filter((p) => p.category === product.category && p.id !== product.id);
+  const fallback = products.filter((p) => p.category !== product.category && p.id !== product.id);
+  const youMayLike = [...related, ...fallback].slice(0, 4);
+
+  const handleAdd = () => {
+    addToCart(product, quantity);
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 2000);
+  };
+
+  const handleBuyNow = () => {
+    addToCart(product, quantity, { openDrawer: false });
+    navigate('/checkout');
+  };
+
+  const onTouchEnd = (e) => {
+    if (touchStart === null || images.length < 2) return;
+    const diff = touchStart - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      setSelected((s) => Math.min(images.length - 1, Math.max(0, s + (diff > 0 ? 1 : -1))));
+    }
+    setTouchStart(null);
+  };
+
+  return (
+    <div>
+      <div className="border-b border-line bg-sand/50">
+        <nav aria-label="Breadcrumb" className="container mx-auto px-5 py-1 flex flex-wrap items-center gap-x-2 text-[0.68rem] tracking-[0.18em] uppercase text-mute">
+          <Link to="/" className="inline-block py-2 hover:text-ink">Home</Link> <span>/</span>
+          <Link to="/products" className="inline-block py-2 hover:text-ink">Shop</Link> <span>/</span>
+          <Link to={`/products?category=${product.category}`} className="inline-block py-2 hover:text-ink">{meta.label}</Link> <span>/</span>
+          <span className="text-ink">{product.shortName}</span>
+        </nav>
+      </div>
+
+      <section className="container mx-auto px-5 py-10 md:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-16 items-start">
+          {/* Gallery */}
+          <div className="flex flex-col-reverse lg:flex-row gap-4 lg:sticky lg:top-36 w-full max-w-xl mx-auto lg:max-w-none">
+            {images.length > 1 && (
+              <div className="flex lg:flex-col gap-3 justify-center lg:justify-start">
+                {images.map((img, i) => (
+                  <button
+                    key={img}
+                    onClick={() => setSelected(i)}
+                    aria-label={`View image ${i + 1}`}
+                    aria-current={selected === i}
+                    style={{ background: imageBgFor(product.id) }}
+                    className={`w-[4.5rem] h-[4.5rem] md:w-20 md:h-20 border transition-colors ${selected === i ? 'border-ink' : 'border-line hover:border-ink/50'}`}
+                  >
+                    <img src={assetUrl(img)} alt="" className="w-full h-full object-contain p-1" />
+                  </button>
+                ))}
+              </div>
+            )}
+            <div
+              className="relative flex-1 aspect-square border border-line/70 overflow-hidden"
+              style={{ background: imageBgFor(product.id) }}
+              onTouchStart={(e) => setTouchStart(e.touches[0].clientX)}
+              onTouchEnd={onTouchEnd}
+            >
+              <img
+                key={images[selected]}
+                src={assetUrl(images[selected])}
+                alt={product.name}
+                className="w-full h-full object-contain p-3 animate-fade-in"
+              />
+              <span className="absolute top-4 left-4 bg-ink text-white text-[0.7rem] tracking-[0.2em] px-3 py-1.5">−10%</span>
+            </div>
+          </div>
+
+          {/* Info */}
+          <div>
+            <p className="eyebrow mb-3">{meta.label}</p>
+            <h1 className="text-5xl md:text-6xl">{product.shortName}</h1>
+            {product.nameAr && <p className="mt-2 text-2xl text-mute" dir="rtl" lang="ur">{product.nameAr}</p>}
+            <p className="mt-3 text-sm text-mute">{product.subtitle}</p>
+
+            <a href="#reviews" className="mt-4 inline-flex items-center gap-3 py-2 text-sm text-mute hover:text-ink transition-colors">
+              {reviewData.count > 0 ? (
+                <><Stars value={reviewData.average} size={15} /><span>{reviewData.average} · {reviewData.count} {reviewData.count === 1 ? 'review' : 'reviews'}</span></>
+              ) : (
+                <span>No reviews yet. Be the first!</span>
+              )}
+            </a>
+
+            <div className="mt-6 flex flex-wrap items-baseline gap-4 pb-7 border-b border-line">
+              <span className="font-display text-5xl">{formatPrice(price)}</span>
+              <span className="text-lg text-mute line-through">{formatPrice(product.price)}</span>
+              <span className="text-xs tracking-[0.18em] uppercase text-gold font-medium">Save {formatPrice(product.price - price)}</span>
+            </div>
+
+            <p className="mt-7 text-mute leading-relaxed whitespace-pre-line">{product.description}</p>
+
+            {/* Purchase */}
+            <div className="mt-8 flex items-stretch gap-3">
+              <div className="flex items-center border border-ink/30 bg-white">
+                <button onClick={() => setQuantity((q) => Math.max(1, q - 1))} disabled={quantity <= 1} aria-label="Decrease quantity" className="w-10 sm:w-12 h-full flex items-center justify-center hover:bg-sand disabled:opacity-30 transition-colors">
+                  <Minus size={14} />
+                </button>
+                <span className="w-8 sm:w-10 text-center font-medium" aria-live="polite">{quantity}</span>
+                <button onClick={() => setQuantity((q) => q + 1)} aria-label="Increase quantity" className="w-10 sm:w-12 h-full flex items-center justify-center hover:bg-sand transition-colors">
+                  <Plus size={14} />
+                </button>
+              </div>
+              <button onClick={handleAdd} className={`btn flex-1 min-w-0 !whitespace-normal !px-3 sm:!px-6 !tracking-[0.14em] sm:!tracking-[0.24em] text-center leading-tight ${justAdded ? 'btn-dark !bg-gold !border-gold' : 'btn-dark'}`}>
+                {justAdded ? <><Check size={16} /> Added to bag</> : `Add to Bag · ${formatPrice(price * quantity)}`}
+              </button>
+            </div>
+            <div className="mt-3 flex gap-3">
+              <button onClick={handleBuyNow} className="btn btn-outline flex-1">Buy It Now</button>
+              <WishButton product={product} variant="page" />
+            </div>
+
+            {/* Reassurance */}
+            <ul className="mt-8 grid grid-cols-3 gap-3 text-center">
+              {[
+                [Wallet, 'Cash on delivery'],
+                [Truck, 'Nationwide delivery'],
+                [Gift, 'Gift-ready box'],
+              ].map(([Icon, label]) => (
+                <li key={label} className="border border-line bg-white py-4 px-2">
+                  <Icon size={20} strokeWidth={1.25} className="mx-auto text-gold mb-2" />
+                  <span className="text-[0.66rem] tracking-[0.12em] uppercase text-ink/80">{label}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Details */}
+            <div className="mt-8 border-t border-line">
+              {isPerfume(product) && (
+                <Accordion title="Fragrance profile" defaultOpen>
+                  <ul>
+                    {performance.map((row) => (
+                      <li key={row.label} className="flex justify-between py-2.5 border-b border-line/60 last:border-0">
+                        <span>{row.label}</span>
+                        <span className="text-ink font-medium">{row.value}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Accordion>
+              )}
+              <Accordion title="Delivery & payment" defaultOpen={!isPerfume(product)}>
+                <ul className="space-y-2.5">
+                  <li className="flex gap-3"><Truck size={16} className="shrink-0 mt-0.5 text-gold" /> Delivery is Rs. {SHIPPING_FEE}, and free on orders over Rs. {FREE_SHIPPING_THRESHOLD.toLocaleString()}.</li>
+                  <li className="flex gap-3"><Wallet size={16} className="shrink-0 mt-0.5 text-gold" /> Pay by cash on delivery or bank transfer.</li>
+                  <li className="flex gap-3"><ShieldCheck size={16} className="shrink-0 mt-0.5 text-gold" /> Bank transfers are confirmed once your payment screenshot is verified.</li>
+                </ul>
+              </Accordion>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <ReviewsSection productId={product.id} reviewData={reviewData} onChange={reviewData.replace} />
+
+      {/* Related */}
+      <section className="container mx-auto px-5 py-12 md:py-24">
+        <Reveal className="text-center mb-12">
+          <p className="eyebrow mb-3">Complete the collection</p>
+          <h2 className="text-4xl md:text-5xl">You may also like</h2>
+        </Reveal>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 md:gap-x-7 gap-y-12">
+          {youMayLike.map((p) => <ProductCard key={p.id} product={p} />)}
+        </div>
+      </section>
+    </div>
+  );
+};
+
+// Keyed by id so quantity / gallery state resets when switching products.
+const ProductDetail = () => {
+  const { id } = useParams();
+  return <ProductView key={id} id={id} />;
 };
 
 export default ProductDetail;
