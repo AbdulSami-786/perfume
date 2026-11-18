@@ -213,7 +213,7 @@ const OrderCard = ({ order, onUpdated, onProof }) => {
             </div>
             <div>
               <p className="label mb-1">Deliver to</p>
-              <p className="text-mute">{order.address}, {order.city}</p>
+              <p className="text-mute">{order.address}, {order.city}{order.postalCode ? ` ${order.postalCode}` : ''}</p>
             </div>
             {order.notes && <div><p className="label mb-1">Notes</p><p className="text-mute">{order.notes}</p></div>}
             <a href={`https://wa.me/${waPhone(order.phone)}?text=${encodeURIComponent(`Hello ${order.name}, this is Zareen Fragrance about your order ${order.orderId}.`)}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-xs border border-line px-3 py-2 hover:border-ink transition-colors">
@@ -267,12 +267,12 @@ const OrdersTab = ({ orders, onUpdated }) => {
   const visible = orders.filter((o) => {
     if (filter === 'verify' ? !(o.paymentStatus === 'Awaiting verification' && o.status !== 'Cancelled') : filter !== 'all' && o.status !== filter) return false;
     const q = query.trim().toLowerCase();
-    return !q || `${o.orderId} ${o.name} ${o.phone} ${o.email} ${o.city}`.toLowerCase().includes(q);
+    return !q || `${o.orderId} ${o.name} ${o.phone} ${o.email} ${o.city} ${o.postalCode}`.toLowerCase().includes(q);
   });
 
   const exportCsv = () => downloadCsv('zareen-orders.csv', [
-    ['Order', 'Date', 'Status', 'Payment method', 'Payment status', 'Name', 'Phone', 'Email', 'City', 'Address', 'Items', 'Total'],
-    ...visible.map((o) => [o.orderId, o.createdAt, o.status, o.paymentMethod, o.paymentStatus, o.name, o.phone, o.email, o.city, o.address, o.items.map((i) => `${i.name} x${i.quantity}`).join('; '), o.total]),
+    ['Order', 'Date', 'Status', 'Payment method', 'Payment status', 'Name', 'Phone', 'Email', 'City', 'Postal code', 'Address', 'Items', 'Total'],
+    ...visible.map((o) => [o.orderId, o.createdAt, o.status, o.paymentMethod, o.paymentStatus, o.name, o.phone, o.email, o.city, o.postalCode, o.address, o.items.map((i) => `${i.name} x${i.quantity}`).join('; '), o.total]),
   ]);
 
   return (

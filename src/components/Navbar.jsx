@@ -4,7 +4,7 @@ import { ArrowRight, ChevronDown, Heart, Menu, Search, ShoppingBag, User, X } fr
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { useWishlist } from '../context/WishlistContext';
-import { categoryMeta, categoryOrder, imageBgFor, products } from '../data/products';
+import { categoryMeta, categoryOrder, imageBgFor, products, photoFit } from '../data/products';
 import { applyDiscount, assetUrl, FREE_SHIPPING_THRESHOLD, formatPrice } from '../lib/site';
 
 const navLink = ({ isActive }) =>
@@ -84,7 +84,7 @@ const SearchPanel = ({ open, onClose }) => {
                     <li key={p.id}>
                       <Link to={`/product/${p.id}`} onClick={() => { onClose(); setQuery(''); }} className="flex items-center gap-4 py-3 group">
                         <span className="w-14 h-16 border border-line/70 shrink-0" style={{ background: imageBgFor(p.id) }}>
-                          <img src={assetUrl(p.mainImage)} alt="" className="w-full h-full object-contain p-1" />
+                          <img src={assetUrl(p.mainImage)} alt="" className={`w-full h-full ${photoFit(p.mainImage)}`} />
                         </span>
                         <span className="flex-1 min-w-0">
                           <span className="block font-display text-xl group-hover:text-gold transition-colors">{p.shortName}</span>
@@ -247,7 +247,7 @@ const Navbar = () => {
               {categoryOrder.map((key) => (
                 <Link key={key} to={`/products?category=${key}`} className="group block text-center">
                   <span className="block aspect-square bg-white border border-line/70 overflow-hidden mb-3">
-                    <img src={categoryMeta[key].image} alt="" className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                    <img src={categoryMeta[key].image} alt="" className={`w-full h-full ${photoFit(categoryMeta[key].image, 'p-2')} group-hover:scale-105 transition-transform duration-500`} loading="lazy" />
                   </span>
                   <span className="block font-display text-xl group-hover:text-gold transition-colors">{categoryMeta[key].label}</span>
                   <span className="block text-[0.7rem] text-mute mt-0.5">{products.filter((p) => p.category === key).length === 1 ? '1 item' : `${products.filter((p) => p.category === key).length} items`}</span>

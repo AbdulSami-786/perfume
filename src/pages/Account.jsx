@@ -4,7 +4,7 @@ import { ChevronDown, Heart, Loader2, LogOut, PackageOpen, User } from 'lucide-r
 import { useAuth } from '../context/AuthContext';
 import { api } from '../lib/api';
 import { assetUrl, formatPrice } from '../lib/site';
-import { getProduct, imageBgFor } from '../data/products';
+import { getProduct, imageBgFor, photoFit } from '../data/products';
 import PageHeader from '../components/PageHeader';
 import WishlistGrid from '../components/WishlistGrid';
 
@@ -43,7 +43,7 @@ const OrderCard = ({ order }) => {
         <div className="flex -space-x-3">
           {order.items.slice(0, 3).map((i) => (
             <span key={i.id} className="w-14 h-16 border border-line/70 ring-2 ring-white" style={{ background: imageBgFor(i.id) }}>
-              <img src={assetUrl(getProduct(i.id)?.mainImage)} alt="" className="w-full h-full object-contain p-1" />
+              <img src={assetUrl(getProduct(i.id)?.mainImage)} alt="" className={`w-full h-full ${photoFit(getProduct(i.id)?.mainImage || '')}`} />
             </span>
           ))}
         </div>
@@ -64,7 +64,7 @@ const OrderCard = ({ order }) => {
             {order.items.map((i) => (
               <li key={i.id} className="flex items-center gap-4">
                 <span className="w-12 h-14 border border-line/70 shrink-0" style={{ background: imageBgFor(i.id) }}>
-                  <img src={assetUrl(getProduct(i.id)?.mainImage)} alt="" className="w-full h-full object-contain p-1" />
+                  <img src={assetUrl(getProduct(i.id)?.mainImage)} alt="" className={`w-full h-full ${photoFit(getProduct(i.id)?.mainImage || '')}`} />
                 </span>
                 <span className="flex-1 min-w-0">
                   <Link to={`/product/${i.id}`} className="block hover:text-gold transition-colors">{i.name}</Link>
@@ -83,7 +83,7 @@ const OrderCard = ({ order }) => {
             </dl>
             <div>
               <p className="label mb-1">Delivering to</p>
-              <p className="text-mute">{order.address}, {order.city}</p>
+              <p className="text-mute">{order.address}, {order.city}{order.postalCode ? ` ${order.postalCode}` : ''}</p>
             </div>
             {order.paymentStatus === 'Awaiting verification' && (
               <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200 px-3 py-2.5">
@@ -128,11 +128,9 @@ const Orders = () => {
   return <div className="space-y-4">{state.orders.map((o) => <OrderCard key={o.orderId} order={o} />)}</div>;
 };
 
-const cities = ['Karachi', 'Lahore', 'Islamabad', 'Rawalpindi'];
-
 const Profile = () => {
   const { user, updateProfile } = useAuth();
-  const [form, setForm] = useState({ name: user.name, phone: user.phone, address: user.address, city: user.city || 'Karachi' });
+  const [form, setForm] = useState({ name: user.name, phone: user.phone, address: user.address, city: user.city || '', postalCode: user.postalCode || '' });
   const [state, setState] = useState({ busy: false, saved: false, error: '' });
   const set = (e) => { setState((s) => ({ ...s, saved: false })); setForm((f) => ({ ...f, [e.target.name]: e.target.value })); };
 
@@ -157,11 +155,13 @@ const Profile = () => {
         <div><label htmlFor="p-name" className="label">Full name</label><input id="p-name" name="name" value={form.name} onChange={set} required className="field" /></div>
         <div><label htmlFor="p-phone" className="label">Phone</label><input id="p-phone" name="phone" type="tel" value={form.phone} onChange={set} className="field" /></div>
       </div>
-      <div className="grid sm:grid-cols-[1fr_12rem] gap-7">
-        <div><label htmlFor="p-address" className="label">Delivery address</label><input id="p-address" name="address" value={form.address} onChange={set} placeholder="House / street / area" className="field" /></div>
-        <div><label htmlFor="p-city" className="label">City</label>
-          <select id="p-city" name="city" value={form.city} onChange={set} className="field">{cities.map((c) => <option key={c}>{c}</option>)}</select>
-        </div>
+      <div>
+        <label htmlFor="p-address" className="label">Delivery address</label>
+        <input id="p-address" name="address" value={form.address} onChange={set} placeholder="House / street / area" className="field" />
+      </div>
+      <div className="grid sm:grid-cols-2 gap-7">
+        <div><label htmlFor="p-city" className="label">City</label><input id="p-city" name="city" value={form.city} onChange={set} autoComplete="address-level2" placeholder="e.g. Karachi" maxLength={60} className="field" /></div>
+        <div><label htmlFor="p-postal" className="label">Postal code</label><input id="p-postal" name="postalCode" value={form.postalCode} onChange={set} inputMode="numeric" autoComplete="postal-code" placeholder="e.g. 75500" maxLength={10} className="field" /></div>
       </div>
       {state.error && <p role="alert" className="text-sm text-red-700">{state.error}</p>}
       <div className="flex items-center gap-5">

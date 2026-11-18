@@ -10,8 +10,6 @@ import { api, imageToDataUrl } from '../lib/api';
 import { BANK, formatPrice, PROMO_CODE } from '../lib/site';
 import Receipt from '../components/Receipt';
 
-const cities = ['Karachi', 'Lahore', 'Islamabad', 'Rawalpindi'];
-
 /* ------------------------------ small pieces ------------------------------ */
 
 const Steps = ({ current }) => {
@@ -110,7 +108,7 @@ const Checkout = () => {
   const [edits, setEdits] = useState({});
   const defaults = {
     name: user?.name || '', phone: user?.phone || '', email: user?.email || '',
-    city: user?.city || 'Karachi', address: user?.address || '', notes: '',
+    city: user?.city || '', postalCode: user?.postalCode || '', address: user?.address || '', notes: '',
   };
   const val = (k) => edits[k] ?? defaults[k];
   const set = (e) => setEdits((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -191,6 +189,7 @@ const Checkout = () => {
                 savings={placed.savings}
                 customerName={placed.customer.name}
                 city={placed.customer.city}
+                postalCode={placed.customer.postalCode}
                 address={placed.customer.address}
                 method={placed.method}
                 orderId={placed.orderId}
@@ -228,7 +227,7 @@ const Checkout = () => {
     }
     setBusy(true);
     try {
-      const customer = { name: val('name'), phone: val('phone'), email: val('email'), city: val('city'), address: val('address'), notes: val('notes') };
+      const customer = { name: val('name'), phone: val('phone'), email: val('email'), city: val('city'), postalCode: val('postalCode'), address: val('address'), notes: val('notes') };
       const data = await api('placeOrder', {
         customer,
         items: cartItems.map((i) => ({ id: i.id, quantity: i.quantity })),
@@ -287,19 +286,21 @@ const Checkout = () => {
                   <label htmlFor="phone" className="label">Phone</label>
                   <input id="phone" name="phone" type="tel" value={val('phone')} onChange={set} required autoComplete="tel" placeholder="03XX XXXXXXX" className="field" />
                 </div>
-                <div>
+                <div className="md:col-span-2">
                   <label htmlFor="email" className="label">Email</label>
                   <input id="email" name="email" type="email" value={val('email')} onChange={set} required autoComplete="email" placeholder="you@example.com" className="field" />
-                </div>
-                <div>
-                  <label htmlFor="city" className="label">City</label>
-                  <select id="city" name="city" value={val('city')} onChange={set} className="field">
-                    {cities.map((c) => <option key={c}>{c}</option>)}
-                  </select>
                 </div>
                 <div className="md:col-span-2">
                   <label htmlFor="address" className="label">Delivery address</label>
                   <textarea id="address" name="address" value={val('address')} onChange={set} required rows={2} autoComplete="street-address" placeholder="House / street / area / landmark" className="field resize-none" />
+                </div>
+                <div>
+                  <label htmlFor="city" className="label">City</label>
+                  <input id="city" name="city" value={val('city')} onChange={set} required autoComplete="address-level2" placeholder="e.g. Karachi" maxLength={60} className="field" />
+                </div>
+                <div>
+                  <label htmlFor="postalCode" className="label">Postal code</label>
+                  <input id="postalCode" name="postalCode" value={val('postalCode')} onChange={set} required inputMode="numeric" autoComplete="postal-code" placeholder="e.g. 75500" pattern="[0-9A-Za-z][0-9A-Za-z \-]{2,9}" title="Your postal code (3–10 letters or digits)" maxLength={10} className="field" />
                 </div>
                 <div className="md:col-span-2">
                   <label htmlFor="notes" className="label">Order notes <span className="normal-case tracking-normal text-mute/70">(optional)</span></label>
@@ -395,6 +396,7 @@ const Checkout = () => {
                 savings={cart.savings}
                 customerName={val('name')}
                 city={val('city')}
+                postalCode={val('postalCode')}
                 method={method}
                 date={now}
               />

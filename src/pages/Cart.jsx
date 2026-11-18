@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext';
 import { assetUrl, formatPrice, FREE_SHIPPING_THRESHOLD } from '../lib/site';
 import PageHeader from '../components/PageHeader';
 import OrderSummaryRows from '../components/OrderSummaryRows';
-import { categoryMeta, imageBgFor } from '../data/products';
+import { categoryMeta, imageBgFor, photoFit } from '../data/products';
 
 const Cart = () => {
   const cart = useCart();
@@ -56,7 +56,7 @@ const Cart = () => {
               {cartItems.map((item) => (
                 <li key={item.id} className="flex gap-4 sm:gap-6 py-6 border-b border-line">
                   <Link to={`/product/${item.id}`} className="shrink-0 w-24 h-28 sm:w-28 sm:h-32 border border-line/70" style={{ background: imageBgFor(item.id) }}>
-                    <img src={assetUrl(item.mainImage)} alt={item.name} className="w-full h-full object-contain p-1.5" />
+                    <img src={assetUrl(item.mainImage)} alt={item.name} className={`w-full h-full ${photoFit(item.mainImage, 'p-1.5')}`} />
                   </Link>
                   <div className="flex-1 min-w-0 flex flex-col">
                     <div className="flex justify-between gap-4">

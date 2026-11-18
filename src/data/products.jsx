@@ -5,17 +5,17 @@ export const categoryMeta = {
   men: {
     label: 'For Him',
     description: 'Bold, refined Eau de Parfum for men',
-    image: '/p1.jpeg',
+    image: '/products/white-sultan-1.webp',
   },
   women: {
     label: 'For Her',
     description: 'Floral, graceful Eau de Parfum for women',
-    image: '/p2.jpeg',
+    image: '/products/pink-aura-1.webp',
   },
   home: {
     label: 'Reed Diffusers',
     description: 'Household aroma therapy for every room',
-    image: '/p8.jpeg',
+    image: '/products/rose-petal-reed-1.webp',
   },
   accessories: {
     label: 'Car Diffusers',
@@ -40,7 +40,8 @@ export const products = [
     subtitle: 'Eau de Parfum · 50 ml',
     price: 2850,
     images: ['/p1.jpeg', '/p1-2.jpeg', '/p1-3.jpeg'],
-    mainImage: '/p1.jpeg',
+    mainImage: '/products/musk-al-rawdah-1.webp',
+    lifestyle: ['/products/musk-al-rawdah-1.webp', '/products/musk-al-rawdah-2.webp', '/products/musk-al-rawdah-3.webp'],
     description:
       'An elegant, luxurious scent inspired by traditional musk notes.\n\nThe fragrance blends rich oriental musk with subtle floral hints for a sophisticated aura.',
     category: 'men',
@@ -52,7 +53,8 @@ export const products = [
     subtitle: 'Eau de Parfum · 50 ml',
     price: 2900,
     images: ['/p2.jpeg', '/p2-2.jpeg', '/p2-3.jpeg'],
-    mainImage: '/p2.jpeg',
+    mainImage: '/products/pink-aura-1.webp',
+    lifestyle: ['/products/pink-aura-1.webp', '/products/pink-aura-2.webp', '/products/pink-aura-3.webp', '/products/pink-aura-4.webp', '/products/pink-aura-5.webp'],
     description:
       'A fresh and captivating scent that elevates your day.\n\nPink Aura blends floral and fruity notes for a boost of confidence and energy.',
     category: 'women',
@@ -76,7 +78,8 @@ export const products = [
     subtitle: 'Eau de Parfum · 50 ml',
     price: 3250,
     images: ['/p4.jpeg', '/p4-2.jpeg', '/p4-3.jpeg'],
-    mainImage: '/p4.jpeg',
+    mainImage: '/products/white-sultan-1.webp',
+    lifestyle: ['/products/white-sultan-1.webp', '/products/white-sultan-2.webp', '/products/white-sultan-3.webp'],
     // These photos have a grey backdrop; match it so the image blends into its frame.
     imageBg: '#8a8b86',
     description: 'A royal scent that elevates your vibe. White Sultan is made for those who like to be remembered.',
@@ -123,7 +126,8 @@ export const products = [
     subtitle: 'Reed Diffuser · Household Aroma Therapy',
     price: 2650,
     images: ['/p8.jpeg'],
-    mainImage: '/p8.jpeg',
+    mainImage: '/products/rose-petal-reed-1.webp',
+    lifestyle: ['/products/rose-petal-reed-1.webp', '/products/rose-petal-reed-2.webp'],
     description:
       'Transform your home into a floral sanctuary with this household aroma therapy diffuser, featuring the delicate and romantic scent of fresh rose petals.',
     category: 'home',
@@ -171,12 +175,48 @@ export const products = [
     subtitle: 'Eau de Parfum · 50 ml',
     price: 3250,
     images: ['/p12.jpeg', '/p12-2.jpeg', '/p12-3.jpeg'],
-    mainImage: '/p12.jpeg',
+    mainImage: '/products/maison-flora-1.webp',
+    lifestyle: ['/products/maison-flora-1.webp', '/products/maison-flora-2.webp', '/products/maison-flora-3.webp'],
     description:
       'Maison Flora is a go-to Eau de Parfum that fills your day with an enchanting fragrance.\n\n50 ml of a luxurious floral-woody blend.',
     category: 'women',
   },
+  {
+    id: 13,
+    name: 'Fateh by Zareen Fragrance 50 ml Eau de Parfum',
+    shortName: 'Fateh',
+    nameAr: 'فاتح',
+    subtitle: 'Eau de Parfum · 50 ml',
+    price: 2860,
+    images: [],
+    mainImage: '/products/fateh-1.webp',
+    lifestyle: ['/products/fateh-1.webp', '/products/fateh-2.webp', '/products/fateh-3.webp'],
+    notes: ['Grapefruit', 'Marine accord', 'Mandarin orange'],
+    description:
+      'Fateh is for those who want to win in every field. A sporty, fresh, and powerful fragrance that makes you feel energetic and confident.\n\nIt starts with a burst of citrus and marine freshness, then settles into a clean, masculine scent that lasts all day. Perfect for gym, office, daily wear, and night outs.',
+    category: 'men',
+  },
+  {
+    id: 14,
+    name: 'Gazal by Zareen Fragrance 50 ml Eau de Parfum',
+    shortName: 'Gazal',
+    nameAr: 'غزل',
+    subtitle: 'Eau de Parfum · 50 ml',
+    price: 2850,
+    images: [],
+    mainImage: '/products/gazal-1.webp',
+    lifestyle: ['/products/gazal-1.webp', '/products/gazal-2.webp', '/products/gazal-3.webp', '/products/gazal-4.webp'],
+    description:
+      'Gazal is a refined Eau de Parfum from Zareen Fragrance, in a clear 50 ml bottle finished with a pink cap and a satin ribbon.',
+    category: 'women',
+  },
 ];
+
+// Styled photos live in /public/products and are shown in the product-page gallery.
+export const isLifestylePhoto = (src) => String(src).startsWith('/products/');
+
+// How a product picture should sit in its frame: the styled photos fill it, the old white studio shots sit inside it.
+export const photoFit = (src, pad = 'p-1') => (isLifestylePhoto(src) ? 'object-cover' : `object-contain ${pad}`);
 
 export const isPerfume = (product) => product.category === 'men' || product.category === 'women';
 

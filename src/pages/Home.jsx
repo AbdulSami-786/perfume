@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   ArrowRight, Gift, Quote, Sparkles, Star, Truck, Wallet, Wind,
 } from 'lucide-react';
-import { categoryMeta, categoryOrder, getProduct, products } from '../data/products';
+import { categoryMeta, categoryOrder, getProduct, products, photoFit } from '../data/products';
 import { applyDiscount, assetUrl, formatPrice } from '../lib/site';
 import ProductCard from '../components/ProductCard';
 import Reveal from '../components/Reveal';
@@ -53,7 +53,7 @@ const Categories = () => (
             <Reveal key={key} delay={i * 80} className={`md:col-span-2 lg:col-span-1 ${i === 4 ? 'col-span-2' : ''} ${i === 3 ? 'md:col-start-2 lg:col-start-auto' : ''}`}>
               <Link to={`/products?category=${key}`} className="group block">
                 <div className={`relative bg-white border border-line/70 overflow-hidden ${i === 4 ? 'aspect-[16/9] md:aspect-[4/5]' : 'aspect-[4/5]'}`}>
-                  <img src={meta.image} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700" />
+                  <img src={meta.image} alt="" loading="lazy" className={`absolute inset-0 w-full h-full ${photoFit(meta.image, 'p-4')} group-hover:scale-105 transition-transform duration-700`} />
                   <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink/55 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <span className="absolute bottom-4 left-0 right-0 text-center text-[0.7rem] tracking-[0.26em] uppercase text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
                     Shop now
@@ -108,8 +108,8 @@ const Spotlight = () => {
       <div className="container mx-auto px-5 grid md:grid-cols-2 items-center gap-12 md:gap-20 py-14 md:py-28">
         <Reveal>
           <div className="relative max-w-md mx-auto">
-            <div className="aspect-square bg-white overflow-hidden">
-              <img src={assetUrl(p.images[0])} alt={p.name} loading="lazy" className="w-full h-full object-contain p-2" />
+            <div className="aspect-[4/5] bg-charcoal overflow-hidden">
+              <img src={assetUrl(p.lifestyle[0])} alt={p.name} loading="lazy" className="w-full h-full object-cover" />
             </div>
             <div className="absolute -inset-3 border border-gold/40 pointer-events-none translate-x-3 translate-y-3" />
           </div>
@@ -165,7 +165,7 @@ const Lifestyle = () => (
               <div className="grid grid-cols-3 bg-sand/60">
                 {c.ids.map((id) => (
                   <div key={id} className="aspect-[3/4] overflow-hidden">
-                    <img src={assetUrl(getProduct(id).mainImage)} alt={getProduct(id).name} loading="lazy" className="w-full h-full object-contain p-1 mix-blend-multiply group-hover:scale-105 transition-transform duration-700" />
+                    <img src={assetUrl(getProduct(id).images[0])} alt={getProduct(id).name} loading="lazy" className="w-full h-full object-contain p-1 mix-blend-multiply group-hover:scale-105 transition-transform duration-700" />
                   </div>
                 ))}
               </div>

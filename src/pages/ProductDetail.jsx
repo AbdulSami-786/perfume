@@ -4,7 +4,7 @@ import {
   Check, ChevronDown, Gift, Minus, Plus, ShieldCheck, Truck, Wallet,
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { categoryMeta, getProduct, imageBgFor, isPerfume, products } from '../data/products';
+import { categoryMeta, getProduct, imageBgFor, isLifestylePhoto, isPerfume, products } from '../data/products';
 import {
   applyDiscount, assetUrl, formatPrice, FREE_SHIPPING_THRESHOLD, SHIPPING_FEE,
 } from '../lib/site';
@@ -62,7 +62,9 @@ const ProductView = ({ id }) => {
     );
   }
 
-  const images = product.images?.length ? product.images : [product.mainImage];
+  const studio = product.images?.length ? product.images : (product.lifestyle?.length ? [] : [product.mainImage]);
+  const images = [...(product.lifestyle || []), ...studio]; // styled photos first
+  const hasPhotos = (product.lifestyle?.length || 0) > 0;
   const price = applyDiscount(product.price);
   const meta = categoryMeta[product.category];
   const related = products.filter((p) => p.category === product.category && p.id !== product.id);
@@ -105,7 +107,7 @@ const ProductView = ({ id }) => {
           {/* Gallery */}
           <div className="flex flex-col-reverse lg:flex-row gap-4 lg:sticky lg:top-36 w-full max-w-xl mx-auto lg:max-w-none">
             {images.length > 1 && (
-              <div className="flex lg:flex-col gap-3 justify-center lg:justify-start">
+              <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-x-visible lg:overflow-y-auto lg:max-h-[36rem] no-scrollbar lg:w-20 shrink-0 pb-1 lg:pb-0">
                 {images.map((img, i) => (
                   <button
                     key={img}
@@ -113,15 +115,15 @@ const ProductView = ({ id }) => {
                     aria-label={`View image ${i + 1}`}
                     aria-current={selected === i}
                     style={{ background: imageBgFor(product.id) }}
-                    className={`w-[4.5rem] h-[4.5rem] md:w-20 md:h-20 border transition-colors ${selected === i ? 'border-ink' : 'border-line hover:border-ink/50'}`}
+                    className={`shrink-0 w-[4.5rem] h-[4.5rem] md:w-20 md:h-20 border transition-colors ${selected === i ? 'border-ink' : 'border-line hover:border-ink/50'}`}
                   >
-                    <img src={assetUrl(img)} alt="" className="w-full h-full object-contain p-1" />
+                    <img src={assetUrl(img)} alt="" loading="lazy" className={`w-full h-full ${isLifestylePhoto(img) ? 'object-cover' : 'object-contain p-1'}`} />
                   </button>
                 ))}
               </div>
             )}
             <div
-              className="relative flex-1 aspect-square border border-line/70 overflow-hidden"
+              className={`relative flex-1 border border-line/70 overflow-hidden ${hasPhotos ? 'aspect-[4/5]' : 'aspect-square'}`}
               style={{ background: imageBgFor(product.id) }}
               onTouchStart={(e) => setTouchStart(e.touches[0].clientX)}
               onTouchEnd={onTouchEnd}
@@ -130,7 +132,7 @@ const ProductView = ({ id }) => {
                 key={images[selected]}
                 src={assetUrl(images[selected])}
                 alt={product.name}
-                className="w-full h-full object-contain p-3 animate-fade-in"
+                className={`w-full h-full animate-fade-in ${isLifestylePhoto(images[selected]) ? 'object-cover' : 'object-contain p-3'}`}
               />
               <span className="absolute top-4 left-4 bg-ink text-white text-[0.7rem] tracking-[0.2em] px-3 py-1.5">−10%</span>
             </div>
@@ -140,7 +142,7 @@ const ProductView = ({ id }) => {
           <div>
             <p className="eyebrow mb-3">{meta.label}</p>
             <h1 className="text-5xl md:text-6xl">{product.shortName}</h1>
-            {product.nameAr && <p className="mt-2 text-2xl text-mute" dir="rtl" lang="ur">{product.nameAr}</p>}
+            {product.nameAr && <p className="mt-2 text-2xl text-mute"><span dir="rtl" lang="ur">{product.nameAr}</span></p>}
             <p className="mt-3 text-sm text-mute">{product.subtitle}</p>
 
             <a href="#reviews" className="mt-4 inline-flex items-center gap-3 py-2 text-sm text-mute hover:text-ink transition-colors">
@@ -158,6 +160,17 @@ const ProductView = ({ id }) => {
             </div>
 
             <p className="mt-7 text-mute leading-relaxed whitespace-pre-line">{product.description}</p>
+
+            {product.notes?.length > 0 && (
+              <div className="mt-7">
+                <p className="label mb-3">Fragrance notes</p>
+                <ul className="flex flex-wrap gap-2">
+                  {product.notes.map((n) => (
+                    <li key={n} className="border border-line bg-white px-4 py-2 text-sm">{n}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Purchase */}
             <div className="mt-8 flex items-stretch gap-3">

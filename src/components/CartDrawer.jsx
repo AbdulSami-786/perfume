@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { assetUrl, formatPrice, FREE_SHIPPING_THRESHOLD } from '../lib/site';
-import { imageBgFor } from '../data/products';
+import { imageBgFor, photoFit } from '../data/products';
 
 const CartDrawer = () => {
   const {
@@ -62,7 +62,7 @@ const CartDrawer = () => {
               {cartItems.map((item) => (
                 <li key={item.id} className="flex gap-4 py-5">
                   <Link to={`/product/${item.id}`} onClick={closeDrawer} className="shrink-0 w-20 h-24 border border-line/70" style={{ background: imageBgFor(item.id) }}>
-                    <img src={assetUrl(item.mainImage)} alt={item.name} className="w-full h-full object-contain p-1" />
+                    <img src={assetUrl(item.mainImage)} alt={item.name} className={`w-full h-full ${photoFit(item.mainImage)}`} />
                   </Link>
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between gap-3">

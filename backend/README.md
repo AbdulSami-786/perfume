@@ -66,6 +66,13 @@ You can do everything below in the admin panel, or directly in the Sheet.
 | **Messages** | Messages from the contact form. |
 | **Users / Wishlists** | Customer accounts. Passwords are stored only as salted hashes. |
 
+## Delivery address fields
+
+Checkout and *My Account* ask for **City** (typed freely, no list) and **Postal code** (required at checkout).
+They are saved in the **City** and **PostalCode** columns of the *Orders* tab, and shown on the customer's
+receipt, order history and in the admin panel. If your Sheet was created before this feature, the **PostalCode**
+column is added automatically the first time the updated script runs; older orders simply show it blank.
+
 ## Keep these in sync
 
 Prices are re-calculated on the server so nobody can edit their total. If you change a price,

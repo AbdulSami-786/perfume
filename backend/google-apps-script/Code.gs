@@ -42,7 +42,9 @@ var CATALOG = {
   9:  { name: 'Lavender – Reed Diffuser',                    price: 2650 },
   10: { name: 'Jasmine Bloom – Reed Diffuser',               price: 2650 },
   11: { name: 'Discovery Tester Set',                        price: 1388 },
-  12: { name: 'Maison Flora – Eau de Parfum 50 ml',          price: 3250 }
+  12: { name: 'Maison Flora – Eau de Parfum 50 ml',          price: 3250 },
+  13: { name: 'Fateh – Eau de Parfum 50 ml',                 price: 2860 },
+  14: { name: 'Gazal – Eau de Parfum 50 ml',                 price: 2850 }
 };
 
 var ORDER_STATUSES = ['Pending', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'];
@@ -50,8 +52,8 @@ var PAYMENT_STATUSES = ['Cash on delivery', 'Awaiting verification', 'Verified',
 
 var SHEETS = {
   Orders: ['OrderID', 'Created', 'Status', 'PaymentMethod', 'PaymentStatus', 'ProofURL', 'Name', 'Phone', 'Email',
-           'City', 'Address', 'Notes', 'Items', 'Subtotal', 'PromoDiscount', 'Shipping', 'Total', 'UserEmail', 'ItemsJSON'],
-  Users: ['Email', 'Name', 'Phone', 'Address', 'City', 'Salt', 'Hash', 'Created', 'Role'],
+           'City', 'Address', 'Notes', 'Items', 'Subtotal', 'PromoDiscount', 'Shipping', 'Total', 'UserEmail', 'ItemsJSON', 'PostalCode'],
+  Users: ['Email', 'Name', 'Phone', 'Address', 'City', 'Salt', 'Hash', 'Created', 'Role', 'PostalCode'],
   Reviews: ['ReviewID', 'Created', 'ProductID', 'UserEmail', 'Name', 'Rating', 'Title', 'Text', 'Verified', 'Status'],
   Subscribers: ['Email', 'Created', 'Source'],
   Wishlists: ['Email', 'ProductIDs', 'Updated'],
@@ -148,23 +150,27 @@ function sheet_(name) {
         .setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['Approved', 'Hidden'], true).build());
     }
     if (name === 'Users') addRoleValidation_(sh);
-  } else if (name === 'Users') {
-    ensureRoleColumn_(sh);
+  } else if (TAIL_COLUMNS[name]) {
+    ensureTailColumns_(sh, name);
   }
   return sh;
+}
+
+// Columns added after launch. Older sheets get them added automatically.
+var TAIL_COLUMNS = { Orders: ['PostalCode'], Users: ['Role', 'PostalCode'] };
+
+function ensureTailColumns_(sh, name) {
+  TAIL_COLUMNS[name].forEach(function (col) {
+    var idx = SHEETS[name].indexOf(col) + 1;
+    if (sh.getRange(1, idx).getValue() === col) return;
+    sh.getRange(1, idx).setValue(col);
+    if (name === 'Users' && col === 'Role') addRoleValidation_(sh);
+  });
 }
 
 function addRoleValidation_(sh) {
   sh.getRange(2, SHEETS.Users.indexOf('Role') + 1, 1000, 1)
     .setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['user', 'admin'], true).build());
-}
-
-/** Sheets created before roles existed get the Role column added automatically. */
-function ensureRoleColumn_(sh) {
-  var col = SHEETS.Users.indexOf('Role') + 1;
-  if (sh.getRange(1, col).getValue() === 'Role') return;
-  sh.getRange(1, col).setValue('Role');
-  addRoleValidation_(sh);
 }
 
 function rows_(name) {
@@ -289,7 +295,7 @@ function roleOf_(u) {
 function publicUser_(u) {
   return {
     email: String(u.Email), name: String(u.Name), phone: String(u.Phone), address: String(u.Address),
-    city: String(u.City), role: roleOf_(u)
+    city: String(u.City), postalCode: String(u.PostalCode || ''), role: roleOf_(u)
   };
 }
 
@@ -319,9 +325,9 @@ function signup_(req) {
 
   var salt = Utilities.getUuid();
   writeRow_('Users', {
-    Email: email, Name: name, Phone: phone, Address: '', City: 'Karachi',
+    Email: email, Name: name, Phone: phone, Address: '', City: '', PostalCode: '',
     Salt: salt, Hash: hash_(salt, password), Created: new Date(), Role: 'user'
-  }, ['Email', 'Name', 'Phone', 'Address', 'City', 'Salt', 'Hash', 'Role']);
+  }, ['Email', 'Name', 'Phone', 'Address', 'City', 'PostalCode', 'Salt', 'Hash', 'Role']);
   return sessionFor_(findUser_(email));
 }
 
@@ -348,6 +354,7 @@ function updateProfile_(req) {
   setCell_('Users', user._row, 'Phone', t_(str_(req.phone, 30)));
   setCell_('Users', user._row, 'Address', t_(str_(req.address, 300)));
   setCell_('Users', user._row, 'City', t_(str_(req.city, 60)));
+  setCell_('Users', user._row, 'PostalCode', t_(cleanPostal_(req.postalCode, false)));
   return { user: publicUser_(findUser_(String(user.Email).toLowerCase())) };
 }
 
@@ -384,6 +391,14 @@ function saveWishlist_(req) {
 /* ------------------------------------------------------------------ */
 /* Orders                                                              */
 /* ------------------------------------------------------------------ */
+
+/** Postal / ZIP code: letters, digits, space or hyphen, 3–10 characters. */
+function cleanPostal_(v, required) {
+  var p = str_(v, 12);
+  if (!p && !required) return '';
+  if (!/^[A-Za-z0-9][A-Za-z0-9 \-]{2,9}$/.test(p)) throw new UserError('Please enter a valid postal code.');
+  return p;
+}
 
 function folder_() {
   var it = DriveApp.getFoldersByName(CONFIG.PROOF_FOLDER);
@@ -436,10 +451,11 @@ function placeOrder_(req) {
     name: str_(c.name, 80), phone: str_(c.phone, 30), email: cleanEmail_(c.email),
     city: str_(c.city, 60), address: str_(c.address, 300), notes: str_(c.notes, 300)
   };
+  customer.postalCode = cleanPostal_(c.postalCode, true);
   if (customer.name.length < 2) throw new UserError('Please enter your full name.');
   if (customer.phone.replace(/\D/g, '').length < 10) throw new UserError('Please enter a valid phone number.');
   if (customer.address.length < 8) throw new UserError('Please enter your full delivery address.');
-  if (!customer.city) throw new UserError('Please choose your city.');
+  if (customer.city.length < 2) throw new UserError('Please enter your city.');
 
   var method = req.paymentMethod === 'bank' ? 'bank' : 'cod';
   var priced = priceOrder_(req.items, req.promoCode);
@@ -457,16 +473,16 @@ function placeOrder_(req) {
     PaymentMethod: method === 'bank' ? 'Bank transfer' : 'Cash on delivery',
     PaymentStatus: paymentStatus, ProofURL: proofUrl,
     Name: customer.name, Phone: customer.phone, Email: customer.email,
-    City: customer.city, Address: customer.address, Notes: customer.notes,
+    City: customer.city, PostalCode: customer.postalCode, Address: customer.address, Notes: customer.notes,
     Items: itemsText, Subtotal: priced.subtotal, PromoDiscount: priced.promoDiscount,
     Shipping: priced.shipping, Total: priced.total,
     UserEmail: user ? String(user.Email).toLowerCase() : '',
     ItemsJSON: JSON.stringify(priced.lines)
   }, ['OrderID', 'Status', 'PaymentMethod', 'PaymentStatus', 'ProofURL', 'Name', 'Phone', 'Email', 'City', 'Address',
-      'Notes', 'Items', 'UserEmail', 'ItemsJSON']);
+      'Notes', 'Items', 'UserEmail', 'ItemsJSON', 'PostalCode']);
 
   notifyOwner_('New order ' + orderId + ' — Rs ' + priced.total,
-    customer.name + ' (' + customer.phone + ')\n' + customer.address + ', ' + customer.city + '\n\n' + itemsText +
+    customer.name + ' (' + customer.phone + ')\n' + customer.address + ', ' + customer.city + ' ' + customer.postalCode + '\n\n' + itemsText +
     '\n\nPayment: ' + (method === 'bank' ? 'Bank transfer — screenshot: ' + proofUrl : 'Cash on delivery') +
     '\nTotal: Rs ' + priced.total);
 
@@ -487,7 +503,7 @@ function myOrders_(req) {
       return {
         orderId: String(o.OrderID), createdAt: iso_(o.Created), status: String(o.Status),
         paymentMethod: String(o.PaymentMethod), paymentStatus: String(o.PaymentStatus),
-        city: String(o.City), address: String(o.Address), items: items,
+        city: String(o.City), postalCode: String(o.PostalCode || ''), address: String(o.Address), items: items,
         subtotal: Number(o.Subtotal), promoDiscount: Number(o.PromoDiscount),
         shipping: Number(o.Shipping), total: Number(o.Total)
       };
@@ -633,7 +649,7 @@ function adminOverview_(req) {
     return {
       orderId: String(o.OrderID), createdAt: iso_(o.Created), status: String(o.Status),
       paymentMethod: String(o.PaymentMethod), paymentStatus: String(o.PaymentStatus), proofUrl: String(o.ProofURL),
-      name: String(o.Name), phone: String(o.Phone), email: String(o.Email), city: String(o.City),
+      name: String(o.Name), phone: String(o.Phone), email: String(o.Email), city: String(o.City), postalCode: String(o.PostalCode || ''),
       address: String(o.Address), notes: String(o.Notes), items: items,
       subtotal: Number(o.Subtotal), promoDiscount: Number(o.PromoDiscount), shipping: Number(o.Shipping),
       total: Number(o.Total), userEmail: String(o.UserEmail)
@@ -658,7 +674,7 @@ function adminOverview_(req) {
   }).sort(byNewest_);
 
   var customers = rows_('Users').map(function (u) {
-    return { email: String(u.Email), name: String(u.Name), phone: String(u.Phone), city: String(u.City), role: roleOf_(u), createdAt: iso_(u.Created) };
+    return { email: String(u.Email), name: String(u.Name), phone: String(u.Phone), city: String(u.City), postalCode: String(u.PostalCode || ''), role: roleOf_(u), createdAt: iso_(u.Created) };
   }).sort(byNewest_);
 
   return { orders: orders, reviews: reviews, subscribers: subscribers, messages: messages, customers: customers };

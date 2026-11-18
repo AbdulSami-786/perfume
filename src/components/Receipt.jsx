@@ -43,7 +43,7 @@ const fmtDate = (d) =>
  */
 const Receipt = ({
   items, subtotal, promoDiscount = 0, shipping, total, savings = 0,
-  customerName, city, address, method, orderId, date, paymentStatus, live = false,
+  customerName, city, postalCode, address, method, orderId, date, paymentStatus, live = false,
 }) => {
   const count = items.reduce((s, i) => s + i.quantity, 0);
   const stamp = live ? null : (paymentStatus === 'Verified' ? 'Paid' : method === 'bank' ? 'Awaiting verification' : 'Pay on delivery');
@@ -72,6 +72,7 @@ const Receipt = ({
           <Leader label="Date" value={fmtDate(date)} />
           <Leader label="Customer" value={customerName || '—'} />
           {city && <Leader label="City" value={city} />}
+          {postalCode && <Leader label="Postal code" value={postalCode} />}
           <Leader label="Payment" value={method === 'bank' ? 'Bank transfer' : 'Cash on delivery'} />
           {paymentStatus && <Leader label="Status" value={paymentStatus} />}
         </div>
