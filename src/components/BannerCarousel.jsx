@@ -1,35 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 
 // Brand banners (all 16:9).
 //  • Landscape screens (desktop / laptop / tablet held sideways): full-bleed, full-screen hero.
 //  • Portrait screens (phones / tablet held upright): the WHOLE banner, never cropped or zoomed,
-//    full width under the header, with the headline + button in a panel directly beneath it.
+//    full width under the header — just the carousel, nothing underneath it.
 const slides = [
-  { image: '/banners/flat-10-off.webp', alt: 'Flat 10% off — discover your signature scent. Shop now.', to: '/products', kicker: 'Limited time', title: 'Flat 10% off', cta: 'Shop now' },
-  { image: '/ban1.jpeg', alt: 'Women’s perfume — Pink Aura, Maison Flora and more', to: '/products?category=women', kicker: 'Eau de Parfum', title: 'Women’s Perfume', cta: 'Shop for her' },
-  { image: '/ban2.jpeg', alt: 'Men’s perfume — White Sultan, Musk Al Rawdah and more', to: '/products?category=men', kicker: 'Eau de Parfum', title: 'Men’s Perfume', cta: 'Shop for him' },
+  { image: '/banners/flat-10-off.webp', alt: 'Flat 10% off — discover your signature scent. Shop now.', to: '/products' },
+  { image: '/ban1.jpeg', alt: 'Women’s perfume — Pink Aura, Maison Flora and more', to: '/products?category=women' },
+  { image: '/ban2.jpeg', alt: 'Men’s perfume — White Sultan, Musk Al Rawdah and more', to: '/products?category=men' },
 ];
-
-const Dots = ({ index, setIndex, playing, setPlaying, className = '' }) => (
-  <div className={`items-center gap-2 md:gap-3 ${className}`}>
-    {slides.map((s, i) => (
-      <button
-        key={s.image}
-        onClick={() => setIndex(i)}
-        aria-label={`Show banner ${i + 1}`}
-        aria-current={i === index}
-        className="py-3 px-0.5"
-      >
-        <span className={`block h-[3px] transition-all duration-500 ${i === index ? 'w-7 md:w-10 bg-white' : 'w-3 md:w-5 bg-white/50'}`} />
-      </button>
-    ))}
-    <button onClick={() => setPlaying((p) => !p)} aria-label={playing ? 'Pause banners' : 'Play banners'} className="text-white ml-0.5 p-2.5 -my-1">
-      {playing ? <Pause size={13} /> : <Play size={13} />}
-    </button>
-  </div>
-);
 
 const BannerCarousel = () => {
   const [index, setIndex] = useState(0);
@@ -45,7 +26,6 @@ const BannerCarousel = () => {
   }, [playing, hover]);
 
   const go = (dir) => setIndex((i) => (i + dir + slides.length) % slides.length);
-  const current = slides[index];
 
   // swipe left / right to change banner
   const onTouchStart = (e) => { touchX.current = e.touches[0].clientX; };
@@ -73,7 +53,7 @@ const BannerCarousel = () => {
         onTouchEnd={onTouchEnd}
         onClickCapture={blockClickAfterSwipe}
       >
-        {/* the picture: a normal 16:9 box on portrait screens, the whole hero on landscape ones */}
+        {/* a normal 16:9 box on portrait screens, the whole hero on landscape ones */}
         <div className="relative w-full aspect-video overflow-hidden wide:absolute wide:inset-0 wide:aspect-auto">
           {slides.map((s, i) => {
             const active = i === index;
@@ -97,33 +77,31 @@ const BannerCarousel = () => {
             );
           })}
 
-          <button onClick={() => go(-1)} aria-label="Previous banner" className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/80 hover:bg-white backdrop-blur hidden wide:flex items-center justify-center wide:opacity-0 wide:group-hover:opacity-100 focus-visible:opacity-100 transition-opacity">
+          {/* arrows: only on landscape screens (phones swipe), hidden until hover */}
+          <button onClick={() => go(-1)} aria-label="Previous banner" className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/80 hover:bg-white backdrop-blur hidden wide:flex items-center justify-center wide:opacity-0 wide:group-hover:opacity-100 focus-visible:opacity-100 transition-opacity">
             <ChevronLeft size={18} />
           </button>
-          <button onClick={() => go(1)} aria-label="Next banner" className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/80 hover:bg-white backdrop-blur hidden wide:flex items-center justify-center wide:opacity-0 wide:group-hover:opacity-100 focus-visible:opacity-100 transition-opacity">
+          <button onClick={() => go(1)} aria-label="Next banner" className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/80 hover:bg-white backdrop-blur hidden wide:flex items-center justify-center wide:opacity-0 wide:group-hover:opacity-100 focus-visible:opacity-100 transition-opacity">
             <ChevronRight size={18} />
           </button>
 
-          {/* landscape: dots float over the picture */}
-          <Dots
-            index={index} setIndex={setIndex} playing={playing} setPlaying={setPlaying}
-            className="hidden wide:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-20 bg-ink/60 backdrop-blur px-4 py-2.5"
-          />
-        </div>
-
-        {/* portrait: caption panel under the picture */}
-        <div className="wide:hidden bg-charcoal text-white px-5 md:px-10 pt-5 pb-3">
-          <Link key={index} to={current.to} className="flex items-end justify-between gap-4 animate-fade-in">
-            <span className="min-w-0">
-              <span className="eyebrow !text-gold-light block mb-2">{current.kicker}</span>
-              <span className="block font-display text-[2rem] md:text-5xl leading-none text-balance">{current.title}</span>
-            </span>
-            <span className="btn btn-light shrink-0 !px-5 !py-3.5">{current.cta} <ArrowRight size={14} /></span>
-          </Link>
-          <Dots
-            index={index} setIndex={setIndex} playing={playing} setPlaying={setPlaying}
-            className="flex justify-center mt-2"
-          />
+          {/* dots + pause, over the bottom of the picture on every screen */}
+          <div className="absolute bottom-1.5 md:bottom-4 wide:bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 md:gap-3 bg-ink/55 backdrop-blur px-2.5 md:px-4 py-0 md:py-1.5">
+            {slides.map((s, i) => (
+              <button
+                key={s.image}
+                onClick={() => setIndex(i)}
+                aria-label={`Show banner ${i + 1}`}
+                aria-current={i === index}
+                className="py-3 px-0.5"
+              >
+                <span className={`block h-[3px] transition-all duration-500 ${i === index ? 'w-6 md:w-10 bg-white' : 'w-2.5 md:w-5 bg-white/50'}`} />
+              </button>
+            ))}
+            <button onClick={() => setPlaying((p) => !p)} aria-label={playing ? 'Pause banners' : 'Play banners'} className="text-white p-2.5 -my-1">
+              {playing ? <Pause size={12} /> : <Play size={12} />}
+            </button>
+          </div>
         </div>
       </div>
     </section>

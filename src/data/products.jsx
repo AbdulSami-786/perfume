@@ -66,7 +66,7 @@ export const products = [
     subtitle: 'Eau de Parfum · 50 ml',
     price: 3100,
     images: ['/p3.jpeg', '/p3-2.jpeg', '/p3-3.jpeg'],
-    mainImage: '/p3.jpeg',
+    mainImage: '/products/card-fresh-aura.webp',
     description:
       'A crisp, invigorating scent that leaves a lasting impression of elegance.\n\nFresh Aura captures bright citrus and clean floral notes for all-day freshness.',
     category: 'men',
@@ -92,7 +92,7 @@ export const products = [
     subtitle: 'Car Diffuser',
     price: 1200,
     images: ['/p5.jpeg'],
-    mainImage: '/p5.jpeg',
+    mainImage: '/products/card-car-jasmine-bloom.webp',
     description: 'Transform your drive into a floral paradise with the soft, sweet character of jasmine.',
     category: 'accessories',
   },
@@ -103,7 +103,7 @@ export const products = [
     subtitle: 'Car Diffuser',
     price: 1200,
     images: ['/p6.jpeg'],
-    mainImage: '/p6.jpeg',
+    mainImage: '/products/card-car-rose-petal.webp',
     description: 'A timeless, elegant scent that brings the freshness of a rose garden to your car.',
     category: 'accessories',
   },
@@ -114,7 +114,7 @@ export const products = [
     subtitle: 'Car Diffuser',
     price: 1200,
     images: ['/p7.jpeg'],
-    mainImage: '/p7.jpeg',
+    mainImage: '/products/card-car-lavender.webp',
     description:
       'A calming and elegant car air freshener featuring soothing lavender notes, housed in a stylish glass bottle with a hanging cord.',
     category: 'accessories',
@@ -139,7 +139,7 @@ export const products = [
     subtitle: 'Reed Diffuser · Household Aroma Therapy',
     price: 2650,
     images: ['/p9.jpeg'],
-    mainImage: '/p9.jpeg',
+    mainImage: '/products/card-reed-lavender.webp',
     description:
       'A premium household aroma therapy solution that infuses your space with the timeless, tranquil scent of blooming lavender fields.',
     category: 'home',
@@ -151,7 +151,7 @@ export const products = [
     subtitle: 'Reed Diffuser · Household Aroma Therapy',
     price: 2650,
     images: ['/p10.jpeg'],
-    mainImage: '/p10.jpeg',
+    mainImage: '/products/card-reed-jasmine-bloom.webp',
     description:
       'An enchanting household aroma therapy diffuser that captures the essence of midnight jasmine, filling your home with a sweet and exotic floral bloom.',
     category: 'home',
@@ -163,7 +163,7 @@ export const products = [
     subtitle: 'Collection of five scents',
     price: 1388,
     images: ['/p11.jpeg', '/p11-2.jpeg', '/p11-3.jpeg'],
-    mainImage: '/p11.jpeg',
+    mainImage: '/products/card-discovery-set.webp',
     description:
       'A premium collection of five signature scents. Explore the world of Zareen Fragrance with this curated tester box, featuring everything from floral blooms to fresh, earthy notes.',
     category: 'testers',
@@ -213,6 +213,8 @@ export const products = [
 ];
 
 // Styled photos live in /public/products and are shown in the product-page gallery.
+// `card-*.webp` are the same-size, centred first images made from the white studio shots.
+export const isCardImage = (src) => String(src).includes('/products/card-');
 export const isLifestylePhoto = (src) => String(src).startsWith('/products/');
 
 // How a product picture should sit in its frame: the styled photos fill it, the old white studio shots sit inside it.

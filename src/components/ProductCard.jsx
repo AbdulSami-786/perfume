@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 import { Plus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { applyDiscount, assetUrl, formatPrice } from '../lib/site';
-import { categoryMeta, imageBgFor, isLifestylePhoto } from '../data/products';
+import { categoryMeta, imageBgFor, isCardImage, isLifestylePhoto } from '../data/products';
 import WishButton from './WishButton';
 
 const ProductCard = ({ product }) => {
   const { addToCart, cartItems } = useCart();
   const inBag = cartItems.find((i) => i.id === product.id)?.quantity ?? 0;
   // Styled photo up front → hover reveals the clean studio shot; otherwise the second studio shot.
-  const styled = isLifestylePhoto(product.mainImage);
+  const styled = isLifestylePhoto(product.mainImage) && !isCardImage(product.mainImage);
   const secondImage = styled ? (product.images?.[0] || product.lifestyle?.[1]) : product.images?.[1];
 
   return (
@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
             src={assetUrl(product.mainImage)}
             alt={product.name}
             loading="lazy"
-            className={`absolute inset-0 w-full h-full ${styled ? 'object-cover' : 'object-contain p-3'} transition-all duration-700 ${
+            className={`absolute inset-0 w-full h-full ${isLifestylePhoto(product.mainImage) ? 'object-cover' : 'object-contain p-3'} transition-all duration-700 ${
               secondImage ? 'group-hover:opacity-0 group-hover:scale-105' : 'group-hover:scale-105'
             }`}
           />
